@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="app_dimen_default">16dp</dimen>
+    <dimen name="text_dimen_title">24sp</dimen>
+</resources>
