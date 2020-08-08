@@ -12,4 +12,12 @@
     <string name="atau_masuk_dengan">Atau Masuk dengan</string>
     <string name="sudah_punya_akun">Sudah punya akun? </string>
     <string name="belum_punya_akun">Belum punya akun? </string>
+    <string name="kompetensi_txt_1">STANDAR KOMPETENSI:</string>
+    <string name="kompetensi_txt_2">Memahamai Inventarisari Sarana dan Prasarana.</string>
+    <string name="kompetensi_txt_3">KOMPETENSI DASAR:</string>
+    <string name="kompetensi_txt_4">Melakukan kegiatan Inventarisasi Sarana Dan Prasarana.</string>
+    <string name="kompetensi_txt_5">TUJUAN PEMBELAJARAN:</string>
+    <string name="kompetensi_txt_6">Siswa dapat mengisi Buku Induk Lembar Hasil Obname Barang
+        Inventaris, Buku induk barang Inventaris, Buku Golongan Barang Inventaris, Buku Golongan
+        Barang Non Inventaris serta dapat memberikan Kode Barang.</string>
 </resources>
