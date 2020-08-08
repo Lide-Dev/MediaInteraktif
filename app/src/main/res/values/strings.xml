@@ -5,6 +5,11 @@
         TATA KELOLA SARANA DAN PRASARANA KELAS XII OTOMATISASI TATA KELOLA PERKANTORAN</string>
     <string name="start">Mulai</string>
     <string name="email">Alamat Email</string>
-    <string name="password">Password</string>
-    <string name="login">Masuk</string>
+    <string name="password">Kata Sandi</string>
+    <string name="login">MASUK</string>
+    <string name="no_whatsapp">No. Whatsapp</string>
+    <string name="daftar">DAFTAR</string>
+    <string name="atau_masuk_dengan">Atau Masuk dengan</string>
+    <string name="sudah_punya_akun">Sudah punya akun? </string>
+    <string name="belum_punya_akun">Belum punya akun? </string>
 </resources>
