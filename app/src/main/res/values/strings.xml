@@ -1,3 +1,10 @@
 <resources>
-    <string name="app_name">MediaInteraktif</string>
+    <string name="app_name">Media Interaktif</string>
+    <string name="splash_welcome">Selamat Datang di</string>
+    <string name="splash_title">MEDIA PEMBELAJARAN INTERAKTIF BERBASIS ANDROID PADA MATA PELAJARAN
+        TATA KELOLA SARANA DAN PRASARANA KELAS XII OTOMATISASI TATA KELOLA PERKANTORAN</string>
+    <string name="start">Mulai</string>
+    <string name="email">Alamat Email</string>
+    <string name="password">Password</string>
+    <string name="login">Masuk</string>
 </resources>
