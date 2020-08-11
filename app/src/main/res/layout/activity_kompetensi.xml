@@ -3,7 +3,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:padding="@dimen/app_dimen_default">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:padding="@dimen/app_dimen_default"
+    tools:context=".KompetensiActivity">
     
     <TextView
         android:id="@+id/kompetensi_txt_1"

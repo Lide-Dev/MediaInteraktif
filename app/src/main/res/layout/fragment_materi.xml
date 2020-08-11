@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.materi.MateriFragment"
+    android:padding="@dimen/app_dimen_default">
+
+    <TextView
+        android:id="@+id/materi_txt_subtitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="Materi Subtitle"
+        android:textSize="@dimen/text_dimen_title"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/materi_txt_content"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        tools:text="@tools:sample/lorem"
+        android:layout_margin="@dimen/app_dimen_default"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/materi_txt_subtitle" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
