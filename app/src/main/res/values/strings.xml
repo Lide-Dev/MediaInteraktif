@@ -29,4 +29,14 @@
     <string name="pilihan_video">Pilihan Video</string>
     <string name="nama">Nama :</string>
     <string name="dosen_pembimbing">Dosen Pembimbing:</string>
+    <string name="a">A</string>
+    <string name="b">B</string>
+    <string name="c">C</string>
+    <string name="d">D</string>
+    <string name="e">E</string>
+    <string name="submit">SUBMIT</string>
+    <string name="ulangi">Ulangi</string>
+    <string name="lihat_jawaban">Lihat Jawaban</string>
+    <string name="salah">Salah</string>
+    <string name="wrong">wrong</string>
 </resources>
