@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "18174211545",
+    "firebase_url": "https://media-interaktif-54e3a.firebaseio.com",
+    "project_id": "media-interaktif-54e3a",
+    "storage_bucket": "media-interaktif-54e3a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:18174211545:android:33c8c6423333f435b855c8",
+        "android_client_info": {
+          "package_name": "com.mediainteraktif"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "18174211545-jua0k3438o5a5dg679hcnc1v1pd8b1ih.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.mediainteraktif",
+            "certificate_hash": "87c3d065d7acf97cc31fc17e5ee7e2d0f3d03abc"
+          }
+        },
+        {
+          "client_id": "18174211545-s1c77tq44qk42i4gkgk2hpb1e0cf2563.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCO7FZ0JBgk55nVoGz7v2WFHcH7GzCKwic"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "18174211545-s1c77tq44qk42i4gkgk2hpb1e0cf2563.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
