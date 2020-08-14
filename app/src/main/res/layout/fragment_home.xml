@@ -30,6 +30,7 @@
                 android:textColor="@android:color/white"
                 android:textSize="20sp"
                 android:textStyle="bold"
+                android:text="welcome"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="Selamat Datang {Person_FirstName}" />
@@ -65,6 +66,8 @@
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/app_dimen_default"
             android:padding="@dimen/app_dimen_default"
+            tools:listitem='@layout/materi_rv_item'
+            android:orientation="horizontal"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/home_txt_pilihan_materi" />

@@ -49,7 +49,8 @@
             <EditText
                 android:id="@+id/login_inp_email"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent"
+                android:focusable="false"/>
 
         </LinearLayout>
 
@@ -76,7 +77,8 @@
             <EditText
                 android:id="@+id/login_inp_password"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent"
+                android:focusable="false"/>
 
         </LinearLayout>
 
@@ -118,16 +120,14 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/login_btn_masuk" />
 
-    <ImageView
-        android:id="@+id/login_img_google"
-        android:layout_width="32dp"
-        android:layout_height="32dp"
-        android:src="@drawable/ic_logo_google"
+    <com.google.android.gms.common.SignInButton
+        android:id="@+id/login_btn_google"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/app_dimen_default"
         app:layout_constraintTop_toBottomOf="@+id/login_txt_1"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        tools:layout_editor_absoluteX="16dp" />
+        app:layout_constraintEnd_toEndOf="parent"/>
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -145,6 +145,7 @@
             android:textStyle="bold"/>
 
         <TextView
+            android:id="@+id/login_txt_daftar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/daftar"
