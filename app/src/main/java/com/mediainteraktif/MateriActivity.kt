@@ -2,7 +2,6 @@ package com.mediainteraktif
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.google.firebase.firestore.FirebaseFirestore
 import com.mediainteraktif.ui.materi.MateriFragment
 
 class MateriActivity : AppCompatActivity() {

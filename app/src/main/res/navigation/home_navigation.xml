@@ -7,25 +7,25 @@
 
     <fragment
         android:id="@+id/navigation_home"
-        android:name="com.mediainteraktif.ui.home.HomeFragment"
+        android:name="com.mediainteraktif.ui.home.HomeFragmentNav"
         android:label="@string/home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home_nav" />
 
     <fragment
         android:id="@+id/navigation_materi"
-        android:name="com.mediainteraktif.ui.materi.MateriFragment"
+        android:name="com.mediainteraktif.ui.materi.MateriFragmentNav"
         android:label="@string/materi"
-        tools:layout="@layout/fragment_materi" />
+        tools:layout="@layout/fragment_materi_nav" />
 
     <fragment
         android:id="@+id/navigation_latihan"
-        android:name="com.mediainteraktif.ui.latihan.LatihanFragment"
+        android:name="com.mediainteraktif.ui.latihan.LatihanFragmentNav"
         android:label="@string/latihan"
-        tools:layout="@layout/fragment_latihan" />
+        tools:layout="@layout/fragment_latihan_nav" />
 
     <fragment
         android:id="@+id/navigation_profile"
-        android:name="com.mediainteraktif.ui.profile.ProfileFragment"
+        android:name="com.mediainteraktif.ui.profile.ProfileFragmentNav"
         android:label="@string/profile"
-        tools:layout="@layout/fragment_profile" />
+        tools:layout="@layout/fragment_profile_nav" />
 </navigation>

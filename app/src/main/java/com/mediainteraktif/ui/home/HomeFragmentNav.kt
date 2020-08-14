@@ -21,7 +21,7 @@ import com.mediainteraktif.adapter.HomeAdapter
 import com.mediainteraktif.model.HomeModel
 import com.mediainteraktif.ui.materi.MateriFragment.Companion.ID_DOCUMENT
 
-class HomeFragment : Fragment(), HomeAdapter.OnItemClickListener {
+class HomeFragmentNav : Fragment(), HomeAdapter.OnItemClickListener {
     private lateinit var mAuth: FirebaseAuth
     private lateinit var mFirestore: FirebaseFirestore
     private lateinit var adapter: HomeAdapter
@@ -31,7 +31,7 @@ class HomeFragment : Fragment(), HomeAdapter.OnItemClickListener {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val root = inflater.inflate(R.layout.fragment_home, container, false)
+        val root = inflater.inflate(R.layout.fragment_home_nav, container, false)
 
         mAuth = FirebaseAuth.getInstance()
         val mUser: FirebaseUser? = mAuth.currentUser

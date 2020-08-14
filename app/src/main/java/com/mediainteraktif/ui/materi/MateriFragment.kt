@@ -5,8 +5,8 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.*
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.firestore.FirebaseFirestore
@@ -21,6 +21,11 @@ class MateriFragment : Fragment() {
     private lateinit var mFirestore: FirebaseFirestore
     private lateinit var materiActivity: MateriActivity
 
+    private var no = 1
+    private var noDocument: Int? = 0
+    private var collection = ""
+
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -28,21 +33,17 @@ class MateriFragment : Fragment() {
     ): View? {
         val root = inflater.inflate(R.layout.fragment_materi, container, false)
 
-        val tvSubtitle = root.findViewById<TextView>(R.id.materi_txt_subtitle)
-        val tvContent = root.findViewById<TextView>(R.id.materi_txt_content)
-        val btnNext = root.findViewById<FloatingActionButton>(R.id.materi_btn_next)
-        val btnPrev = root.findViewById<FloatingActionButton>(R.id.materi_btn_prev)
-
+        tvSubtitle = root.findViewById<TextView>(R.id.materi_txt_subtitle)
+        tvContent = root.findViewById<TextView>(R.id.materi_txt_content)
+        btnNext = root.findViewById<FloatingActionButton>(R.id.materi_btn_next)
+        btnPrev = root.findViewById<FloatingActionButton>(R.id.materi_btn_prev)
         materiActivity = MateriActivity()
 
-        val noDocument = activity?.intent?.getIntExtra(ID_DOCUMENT, 0)
-        var no = 1
-
-        val collection: String = "Materi" + noDocument.toString()
+        //database
+        noDocument = activity?.intent?.getIntExtra(ID_DOCUMENT, 0)
+        collection = "Materi" + noDocument.toString()
         mFirestore = FirebaseFirestore.getInstance()
         val db = mFirestore.collection(collection)
-
-        numberCheck(no, btnNext, btnPrev)
 
         db.whereEqualTo("no", no)
             .get()
@@ -56,6 +57,8 @@ class MateriFragment : Fragment() {
                 Log.w("ERROR", "Error getting documents: ", exception)
             }
 
+        numberCheck(no, btnNext, btnPrev)
+
         btnNext.setOnClickListener {
             no = no + 1
             db.whereEqualTo("no", no)
@@ -65,9 +68,11 @@ class MateriFragment : Fragment() {
                         tvContent.text = "${document["contentMateri"]}"
                         tvSubtitle.text = "${document["subtitleMateri"]}"
                     }
+                    numberCheck(no, btnNext, btnPrev)
                 }
                 .addOnFailureListener { exception ->
-                    Log.w("ERROR", "Error getting documents: ", exception)
+                    Toast.makeText(activity, "ERROR NO DOCUMENT! " + exception, Toast.LENGTH_SHORT)
+                        .show()
                 }
         }
 
@@ -80,21 +85,25 @@ class MateriFragment : Fragment() {
                         tvContent.text = "${document["contentMateri"]}"
                         tvSubtitle.text = "${document["subtitleMateri"]}"
                     }
+                    numberCheck(no, btnNext, btnPrev)
                 }
                 .addOnFailureListener { exception ->
-                    Log.w("ERROR", "Error getting documents: ", exception)
+                    Toast.makeText(activity, "ERROR NO DOCUMENT! " + exception, Toast.LENGTH_SHORT)
+                        .show()
                 }
-
         }
 
         return root
     }
 
     fun numberCheck(no: Int, btn1: FloatingActionButton, btn2: FloatingActionButton) {
-        if(no > 2) {
+        if (no >= 7) {
             btn1.visibility = View.GONE
-        } else if(no < 1) {
+        } else if (no <= 1) {
             btn2.visibility = View.GONE
+        } else {
+            btn1.visibility = View.VISIBLE
+            btn2.visibility = View.VISIBLE
         }
     }
 
