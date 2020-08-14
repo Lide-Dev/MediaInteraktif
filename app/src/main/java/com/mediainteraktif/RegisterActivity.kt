@@ -3,6 +3,8 @@ package com.mediainteraktif
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.widget.Button
+import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -17,10 +19,25 @@ import com.google.firebase.auth.GoogleAuthProvider
 
 class RegisterActivity : AppCompatActivity() {
     private lateinit var mAuth: FirebaseAuth
+    private lateinit var mUser: FirebaseUser
     private lateinit var googleSignInClient: GoogleSignInClient
+
+    private lateinit var btnGoogle: SignInButton
+    private lateinit var btnMasuk: TextView
+    private lateinit var inpEmail: EditText
+    private lateinit var inpPass: EditText
+    private lateinit var inpWa: EditText
+    private lateinit var btnDaftar: Button
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
+
+        btnGoogle = findViewById(R.id.register_btn_google)
+        btnMasuk = findViewById(R.id.register_btn_masuk)
+        inpEmail = findViewById(R.id.register_inp_email)
+        inpPass = findViewById(R.id.register_inp_password)
+        btnDaftar = findViewById(R.id.register_btn_daftar)
 
         mAuth = FirebaseAuth.getInstance()
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -29,23 +46,22 @@ class RegisterActivity : AppCompatActivity() {
 
         googleSignInClient = GoogleSignIn.getClient(this, gso)
 
-        val btnGoogle: SignInButton = findViewById(R.id.register_btn_google)
-        btnGoogle.setOnClickListener{
+        btnGoogle.setOnClickListener {
             signIn()
         }
 
-        val btnMasuk: TextView = findViewById(R.id.register_btn_masuk)
         btnMasuk.setOnClickListener {
             intent = Intent(this, LoginActivity::class.java)
             startActivity(intent)
         }
 
-        supportActionBar?.hide()
-    }
+        btnDaftar.setOnClickListener {
+            val email: String = inpEmail.text.toString()
+            val pass: String = inpPass.text.toString()
+            manualSignUp(email, pass)
+        }
 
-    private fun signIn() {
-        val signInIntent = googleSignInClient.signInIntent
-        startActivityForResult(signInIntent, RC_SIGN_IN)
+        supportActionBar?.hide()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -66,7 +82,7 @@ class RegisterActivity : AppCompatActivity() {
     private fun firebaseAuthWithGoogle(idToken: String) {
         val credential = GoogleAuthProvider.getCredential(idToken, null)
         mAuth.signInWithCredential(credential)
-            .addOnCompleteListener(this) {task ->
+            .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
                     Log.d(TAG, "SigninWithCredential:Success")
                     intent = Intent(this, HomeActivity::class.java)
@@ -77,6 +93,26 @@ class RegisterActivity : AppCompatActivity() {
                 }
             }
     }
+
+    private fun signIn() {
+        val signInIntent = googleSignInClient.signInIntent
+        startActivityForResult(signInIntent, RC_SIGN_IN)
+    }
+
+    private fun manualSignUp(email: String, pass: String) {
+        mAuth.createUserWithEmailAndPassword(email, pass)
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    intent = Intent(this, LoginActivity::class.java)
+                    mAuth.signOut()
+                    startActivity(intent)
+                } else {
+                    Log.w(TAG, "createUserWithEmail: Fail", task.exception)
+                    Toast.makeText(this, "Failed to Login", Toast.LENGTH_SHORT).show()
+                }
+            }
+    }
+
 
     companion object {
         private const val TAG = "GoogleActivity"
