@@ -1,7 +1,6 @@
 package com.mediainteraktif.ui.materi
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -21,10 +20,9 @@ class MateriFragment : Fragment() {
     private lateinit var mFirestore: FirebaseFirestore
     private lateinit var materiActivity: MateriActivity
 
-    private var no = 1
+    private var docNumber = 1
     private var noDocument: Int? = 0
     private var collection = ""
-
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -43,68 +41,50 @@ class MateriFragment : Fragment() {
         noDocument = activity?.intent?.getIntExtra(ID_DOCUMENT, 0)
         collection = "Materi" + noDocument.toString()
         mFirestore = FirebaseFirestore.getInstance()
-        val db = mFirestore.collection(collection)
 
-        db.whereEqualTo("no", no)
-            .get()
-            .addOnSuccessListener { documents ->
-                for (document in documents) {
-                    tvContent.text = "${document["contentMateri"]}"
-                    tvSubtitle.text = "${document["subtitleMateri"]}"
-                }
-            }
-            .addOnFailureListener { exception ->
-                Log.w("ERROR", "Error getting documents: ", exception)
-            }
-
-        numberCheck(no, btnNext, btnPrev)
+        getDatabaseText(docNumber)
+        numberCheck(docNumber, btnNext, btnPrev)
 
         btnNext.setOnClickListener {
-            no = no + 1
-            db.whereEqualTo("no", no)
-                .get()
-                .addOnSuccessListener { documents ->
-                    for (document in documents) {
-                        tvContent.text = "${document["contentMateri"]}"
-                        tvSubtitle.text = "${document["subtitleMateri"]}"
-                    }
-                    numberCheck(no, btnNext, btnPrev)
-                }
-                .addOnFailureListener { exception ->
-                    Toast.makeText(activity, "ERROR NO DOCUMENT! " + exception, Toast.LENGTH_SHORT)
-                        .show()
-                }
+            docNumber = docNumber + 1
+            getDatabaseText(docNumber)
         }
 
         btnPrev.setOnClickListener {
-            no = no - 1
-            db.whereEqualTo("no", no)
-                .get()
-                .addOnSuccessListener { documents ->
-                    for (document in documents) {
-                        tvContent.text = "${document["contentMateri"]}"
-                        tvSubtitle.text = "${document["subtitleMateri"]}"
-                    }
-                    numberCheck(no, btnNext, btnPrev)
-                }
-                .addOnFailureListener { exception ->
-                    Toast.makeText(activity, "ERROR NO DOCUMENT! " + exception, Toast.LENGTH_SHORT)
-                        .show()
-                }
+            docNumber = docNumber - 1
+            getDatabaseText(docNumber)
         }
 
         return root
     }
 
-    fun numberCheck(no: Int, btn1: FloatingActionButton, btn2: FloatingActionButton) {
-        if (no >= 7) {
+    fun numberCheck(docNumber: Int, btn1: FloatingActionButton, btn2: FloatingActionButton) {
+        if (docNumber >= 4) {
             btn1.visibility = View.GONE
-        } else if (no <= 1) {
+        } else if (docNumber <= 1) {
             btn2.visibility = View.GONE
         } else {
             btn1.visibility = View.VISIBLE
             btn2.visibility = View.VISIBLE
         }
+    }
+
+    fun getDatabaseText(docNumber: Int) {
+        val db = mFirestore.collection(collection)
+        db.whereEqualTo("no", docNumber)
+            .get()
+            .addOnSuccessListener { documents ->
+                for (document in documents) {
+                    tvContent.text = """${document["contentMateri"]}"""
+                        .replace("_n", "\n")
+                    tvSubtitle.text = """${document["subtitleMateri"]}"""
+                }
+                numberCheck(docNumber, btnNext, btnPrev)
+            }
+            .addOnFailureListener { exception ->
+                Toast.makeText(activity, "ERROR NO DOCUMENT! " + exception, Toast.LENGTH_SHORT)
+                    .show()
+            }
     }
 
     companion object {

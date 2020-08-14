@@ -46,6 +46,8 @@ class HomeActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item.itemId) {
+//            R.id.daftar_pustaka -> null
+//            R.id.help -> null
             R.id.logout -> signingOut()
         }
 
