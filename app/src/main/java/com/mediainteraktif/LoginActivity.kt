@@ -2,9 +2,7 @@ package com.mediainteraktif
 
 import android.content.Intent
 import android.os.Bundle
-import android.os.PersistableBundle
 import android.util.Log
-import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
@@ -14,23 +12,22 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.SignInButton
-import com.google.android.gms.common.api.Api
 import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
-import com.google.firebase.auth.GoogleAuthCredential
 import com.google.firebase.auth.GoogleAuthProvider
-import kotlinx.android.synthetic.main.activity_login.*
 
 class LoginActivity : AppCompatActivity() {
-    private lateinit var mAuth: FirebaseAuth
     private lateinit var googleSignInClient: GoogleSignInClient
+    private lateinit var gso: GoogleSignInOptions
 
     private lateinit var inpEmail: EditText
     private lateinit var inpPass: EditText
     private lateinit var btnLogin: Button
     private lateinit var btnDaftar: TextView
     private lateinit var btnGoogle: SignInButton
+
+    private var mAuth = FirebaseAuth.getInstance()
+    private var mUser = mAuth.currentUser
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,19 +36,16 @@ class LoginActivity : AppCompatActivity() {
         inpEmail = findViewById(R.id.login_inp_email)
         inpPass = findViewById(R.id.login_inp_password)
         btnLogin = findViewById(R.id.login_btn_masuk)
-        btnDaftar= findViewById(R.id.login_txt_daftar)
+        btnDaftar = findViewById(R.id.login_txt_daftar)
         btnGoogle = findViewById(R.id.login_btn_google)
 
-        mAuth = FirebaseAuth.getInstance()
-        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+        gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestIdToken(getString(R.string.default_web_client_id))
             .requestEmail().build()
 
         googleSignInClient = GoogleSignIn.getClient(this, gso)
 
-        supportActionBar?.hide()
-
-        btnGoogle.setOnClickListener{
+        btnGoogle.setOnClickListener {
             signIn()
         }
 
@@ -65,11 +59,12 @@ class LoginActivity : AppCompatActivity() {
             val pass: String = inpPass.text.toString()
             manualSignIn(email, pass)
         }
+
+        supportActionBar?.hide()
     }
 
     override fun onStart() {
         super.onStart()
-        val mUser: FirebaseUser? = mAuth.currentUser
         if (mUser != null) {
             intent = Intent(this, HomeActivity::class.java)
             startActivity(intent)

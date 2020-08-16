@@ -32,7 +32,7 @@
             android:background="@drawable/shape_rounded_10dp_corner"
             android:backgroundTint="@color/blue"
             android:gravity="center"
-            android:orientation="horizontal">
+            android:orientation="horizontal" >
 
             <TextView
                 android:layout_width="50dp"
