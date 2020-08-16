@@ -18,8 +18,8 @@
         tools:layout="@layout/fragment_materi_nav" />
 
     <fragment
-        android:id="@+id/navigation_latihan"
-        android:name="com.mediainteraktif.ui.latihan.LatihanFragmentNav"
+        android:id="@+id/navigation_quiz"
+        android:name="com.mediainteraktif.ui.quiz.QuizFragment"
         android:label="@string/latihan"
         tools:layout="@layout/fragment_latihan_nav" />
 

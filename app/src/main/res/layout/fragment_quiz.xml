@@ -35,6 +35,7 @@
             android:orientation="horizontal" >
 
             <TextView
+                android:id="@+id/quiz_txt_a"
                 android:layout_width="50dp"
                 android:layout_height="match_parent"
                 android:background="@drawable/shape_rounded_fill_10dp"
@@ -64,6 +65,7 @@
             android:orientation="horizontal">
 
             <TextView
+                android:id="@+id/quiz_txt_b"
                 android:layout_width="50dp"
                 android:layout_height="match_parent"
                 android:background="@drawable/shape_rounded_fill_10dp"
@@ -93,6 +95,7 @@
             android:orientation="horizontal">
 
             <TextView
+                android:id="@+id/quiz_txt_c"
                 android:layout_width="50dp"
                 android:layout_height="match_parent"
                 android:background="@drawable/shape_rounded_fill_10dp"
@@ -122,6 +125,7 @@
             android:orientation="horizontal">
 
             <TextView
+                android:id="@+id/quiz_txt_d"
                 android:layout_width="50dp"
                 android:layout_height="match_parent"
                 android:background="@drawable/shape_rounded_fill_10dp"
@@ -151,6 +155,7 @@
             android:orientation="horizontal">
 
             <TextView
+                android:id="@+id/quiz_txt_e"
                 android:layout_width="50dp"
                 android:layout_height="match_parent"
                 android:background="@drawable/shape_rounded_fill_10dp"
