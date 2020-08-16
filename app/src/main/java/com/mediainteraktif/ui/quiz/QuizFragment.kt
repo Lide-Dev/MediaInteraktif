@@ -8,13 +8,49 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.TextView
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore
 import com.mediainteraktif.R
 
+@Suppress("unused")
 class QuizFragment : Fragment() {
+
+    companion object {
+        private lateinit var mFirestore: FirebaseFirestore
+        private lateinit var db: CollectionReference
+
+        private lateinit var btnJawabA: LinearLayout
+        private lateinit var btnJawabB: LinearLayout
+        private lateinit var btnJawabC: LinearLayout
+        private lateinit var btnJawabD: LinearLayout
+        private lateinit var btnJawabE: LinearLayout
+        private lateinit var trySeeLayout: LinearLayout
+        private lateinit var btnSubmit: Button
+        private lateinit var btnTry: Button
+        private lateinit var btnSee: Button
+        private lateinit var txtSoal: TextView
+        private lateinit var txtA: TextView
+        private lateinit var txtB: TextView
+        private lateinit var txtC: TextView
+        private lateinit var txtD: TextView
+        private lateinit var txtE: TextView
+        private lateinit var txtJawabA: TextView
+        private lateinit var txtJawabB: TextView
+        private lateinit var txtJawabC: TextView
+        private lateinit var txtJawabD: TextView
+        private lateinit var txtJawabE: TextView
+
+        private var blue = 1
+        private var green = 1
+        private var red = 1
+        private var documentNumber = 1
+        private var docPath = ""
+        private var realAnswer = "F"
+        private var userAnswer = "-"
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -49,6 +85,10 @@ class QuizFragment : Fragment() {
         btnTry = root.findViewById(R.id.quiz_btn_tryagain)
         btnSee = root.findViewById(R.id.quiz_btn_hints)
 
+        green = ContextCompat.getColor(requireContext(), R.color.green)
+        blue = ContextCompat.getColor(requireContext(), R.color.blue)
+        red = ContextCompat.getColor(requireContext(), R.color.red)
+
         return root
     }
 
@@ -56,6 +96,8 @@ class QuizFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         docPath = "Quiz$documentNumber"
+
+        isClickable(true)
         getQuestionAndSelection()
 
         btnJawabA.setOnClickListener(onClickBtnSelection("a"))
@@ -64,12 +106,61 @@ class QuizFragment : Fragment() {
         btnJawabD.setOnClickListener(onClickBtnSelection("d"))
         btnJawabE.setOnClickListener(onClickBtnSelection("e"))
         btnSubmit.setOnClickListener(onClickBtnSubmit())
+        btnTry.setOnClickListener(onClickTryAgain())
+        btnSee.setOnClickListener(onClickHints())
     }
 
-    private fun onClickBtnSelection(selection: String): View.OnClickListener =
+    private fun onClickHints() = View.OnClickListener {
+        when (realAnswer) {
+            "a" -> {
+                setBtnBackgroundColor(green, red, red, red, red)
+            }
+            "b" -> {
+                setBtnBackgroundColor(red, green, red, red, red)
+            }
+            "c" -> {
+                setBtnBackgroundColor(red, red, green, red, red)
+            }
+            "d" -> {
+                setBtnBackgroundColor(red, red, red, green, red)
+            }
+            "e" -> {
+                setBtnBackgroundColor(red, red, red, red, green)
+            }
+        }
+        btnSee.visibility = View.INVISIBLE
+    }
+
+    private fun ifWrong() {
+        when (userAnswer) {
+            "a" -> {
+                setBtnBackgroundColor(red, blue, blue, blue, blue)
+            }
+            "b" -> {
+                setBtnBackgroundColor(blue, red, blue, blue, blue)
+            }
+            "c" -> {
+                setBtnBackgroundColor(blue, blue, red, blue, blue)
+            }
+            "d" -> {
+                setBtnBackgroundColor(blue, blue, blue, red, blue)
+            }
+            "e" -> {
+                setBtnBackgroundColor(blue, blue, blue, blue, red)
+            }
+        }
+    }
+
+    private fun onClickTryAgain() = View.OnClickListener {
+        setBtnBackgroundColor(blue, blue, blue, blue, blue)
+        trySeeLayout.visibility = View.GONE
+        btnSubmit.visibility = View.VISIBLE
+        isClickable(true)
+        userAnswer = "-"
+    }
+
+    private fun onClickBtnSelection(selection: String) =
         View.OnClickListener {
-            val green = ContextCompat.getColor(requireContext(), R.color.green)
-            val blue = ContextCompat.getColor(requireContext(), R.color.blue)
             userAnswer = selection
 
             when (selection) {
@@ -92,16 +183,23 @@ class QuizFragment : Fragment() {
         }
 
     private fun onClickBtnSubmit() = View.OnClickListener {
-        val blue = ContextCompat.getColor(requireContext(), R.color.blue)
         if (userAnswer == realAnswer) {
-            documentNumber = +1
+            documentNumber += 1
             docPath = "Quiz$documentNumber"
             Log.d("Document", "document path: $docPath")
             getQuestionAndSelection()
             setBtnBackgroundColor(blue, blue, blue, blue, blue)
+            isClickable(false)
+        } else if (userAnswer == "-") {
+            Toast.makeText(activity, "Tolong pilih jawaban terlebih dahulu", Toast.LENGTH_SHORT)
+                .show()
         } else {
             btnSubmit.visibility = View.GONE
             trySeeLayout.visibility = View.VISIBLE
+            btnSee.visibility = View.VISIBLE
+            btnTry.visibility = View.VISIBLE
+            isClickable(false)
+            ifWrong()
         }
     }
 
@@ -124,8 +222,16 @@ class QuizFragment : Fragment() {
             }
     }
 
+    private fun isClickable(ans: Boolean) {
+        btnJawabA.isClickable = ans
+        btnJawabB.isClickable = ans
+        btnJawabC.isClickable = ans
+        btnJawabD.isClickable = ans
+        btnJawabE.isClickable = ans
+    }
+
     private fun setBtnBackgroundColor(a: Int, b: Int, c: Int, d: Int, e: Int) {
-        btnJawabB.background.setTint(a)
+        btnJawabA.background.setTint(a)
         txtA.background.setTint(a)
         btnJawabB.background.setTint(b)
         txtB.background.setTint(b)
@@ -135,54 +241,5 @@ class QuizFragment : Fragment() {
         txtD.background.setTint(d)
         btnJawabE.background.setTint(e)
         txtE.background.setTint(e)
-    }
-
-    companion object {
-        private lateinit var mFirestore: FirebaseFirestore
-        private lateinit var db: CollectionReference
-
-        private lateinit var btnJawabA: LinearLayout
-        private lateinit var btnJawabB: LinearLayout
-        private lateinit var btnJawabC: LinearLayout
-        private lateinit var btnJawabD: LinearLayout
-        private lateinit var btnJawabE: LinearLayout
-        private lateinit var trySeeLayout: LinearLayout
-        private lateinit var btnSubmit: Button
-        private lateinit var btnTry: Button
-        private lateinit var btnSee: Button
-        private lateinit var txtSoal: TextView
-        private lateinit var txtA: TextView
-        private lateinit var txtB: TextView
-        private lateinit var txtC: TextView
-        private lateinit var txtD: TextView
-        private lateinit var txtE: TextView
-        private lateinit var txtJawabA: TextView
-        private lateinit var txtJawabB: TextView
-        private lateinit var txtJawabC: TextView
-        private lateinit var txtJawabD: TextView
-        private lateinit var txtJawabE: TextView
-
-        var documentNumber = 1
-            get() = field
-            set(value) {
-                field = value
-            }
-
-        var docPath = ""
-            get() = field
-            set(value) {
-                field = value
-            }
-        var realAnswer = ""
-            get() = field
-            set(value) {
-                field = value
-            }
-
-        var userAnswer = ""
-            get() = field
-            set(value) {
-                field = value
-            }
     }
 }

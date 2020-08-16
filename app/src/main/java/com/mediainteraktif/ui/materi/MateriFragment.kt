@@ -17,18 +17,6 @@ import com.mediainteraktif.MateriActivity
 import com.mediainteraktif.R
 
 class MateriFragment : Fragment() {
-    private lateinit var tvSubtitle: TextView
-    private lateinit var tvContent: TextView
-    private lateinit var btnNext: FloatingActionButton
-    private lateinit var btnPrev: FloatingActionButton
-    private lateinit var mFirestore: FirebaseFirestore
-    private lateinit var materiActivity: MateriActivity
-    private lateinit var db: CollectionReference
-
-    private var docNumber = 1
-    private var noDocument: Int? = 0
-    private var collection = ""
-    private var maxNo: Long = 1L
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -58,7 +46,15 @@ class MateriFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        db.orderBy("no", Query.Direction.DESCENDING)
+            .get()
+            .addOnSuccessListener {querySnapshot ->
+                maxNo = querySnapshot.documents[0]["no"] as Long
+            }
+
         getDatabaseData(docNumber, btnNext, btnPrev)
+
+        Log.d(TAG, "size document : $maxNo")
 
         btnNext.setOnClickListener {
             docNumber += 1
@@ -76,17 +72,6 @@ class MateriFragment : Fragment() {
         btnNext: FloatingActionButton,
         btnPrev: FloatingActionButton
     ) {
-        var maxNos = 0L
-
-        db.orderBy("no", Query.Direction.DESCENDING)
-            .get()
-            .addOnSuccessListener {querySnapshot ->
-                maxNos = querySnapshot.documents[0]["no"] as Long
-            }
-
-        maxNo = maxNos
-        Log.d(TAG, "size document : $maxNos")
-
         db.whereEqualTo("no", docNumber)
             .get()
             .addOnSuccessListener { task ->
@@ -136,5 +121,18 @@ class MateriFragment : Fragment() {
 
     companion object {
         const val ID_DOCUMENT = "extra_document"
+
+        private lateinit var tvSubtitle: TextView
+        private lateinit var tvContent: TextView
+        private lateinit var btnNext: FloatingActionButton
+        private lateinit var btnPrev: FloatingActionButton
+        private lateinit var mFirestore: FirebaseFirestore
+        private lateinit var materiActivity: MateriActivity
+        private lateinit var db: CollectionReference
+
+        private var docNumber = 1
+        private var noDocument: Int? = 0
+        private var collection = ""
+        private var maxNo: Long = 0L
     }
 }
