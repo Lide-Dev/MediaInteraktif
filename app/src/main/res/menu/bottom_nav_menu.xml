@@ -7,9 +7,9 @@
         android:title="@string/home" />
 
     <item
-        android:id="@+id/navigation_materi"
+        android:id="@+id/navigation_latihan"
         android:icon="@drawable/ic_baseline_menu_book_24"
-        android:title="@string/materi" />
+        android:title="@string/latihan" />
 
     <item
         android:id="@+id/navigation_quiz"

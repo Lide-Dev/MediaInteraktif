@@ -22,7 +22,6 @@
         Barang Non Inventaris serta dapat memberikan Kode Barang.</string>
     <string name="home">Home</string>
     <string name="materi">Materi</string>
-    <string name="latihan">Latihan</string>
     <string name="profile">Profile</string>
     <string name="app_desc">Aplikasi ini adalah aplikasi media pembelajaran tentang inventaris. Didalam aplikasi ini terdapat materi dan latihan soal beserta kunci jawabannya.</string>
     <string name="pilihan_materi">Pilihan Materi</string>
@@ -42,4 +41,5 @@
     <string name="daftar_pustaka">Daftar Pustaka</string>
     <string name="logout">Logout</string>
     <string name="bantuan">bantuan</string>
+    <string name="latihan">Latihan</string>
 </resources>

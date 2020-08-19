@@ -1,6 +1,5 @@
 package com.mediainteraktif.ui.materi
 
-import android.content.ContentValues.TAG
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -12,7 +11,6 @@ import androidx.fragment.app.*
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.Query
 import com.mediainteraktif.MateriActivity
 import com.mediainteraktif.R
 
@@ -36,9 +34,19 @@ class MateriFragment : Fragment() {
         btnPrev.visibility = View.GONE
 
         noDocument = activity?.intent?.getIntExtra(ID_DOCUMENT, 0)
+        maxNo = activity?.intent?.getLongExtra(SIZE_DOCUMENT, 0L)
+
+        Log.d("DOCUMENT", "noDocument get from Intent : $noDocument")
+        Log.d("DOCUMENT", "maxNo get from Intent : $maxNo")
+
         collection = "Materi" + noDocument.toString()
         mFirestore = FirebaseFirestore.getInstance()
         db = mFirestore.collection(collection)
+
+        getDatabaseData(docNumber)
+        check(btnNext, btnPrev)
+
+        Log.d("MateriFragment", "------------- END MateriFragment -------------")
 
         return root
     }
@@ -46,31 +54,21 @@ class MateriFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        db.orderBy("no", Query.Direction.DESCENDING)
-            .get()
-            .addOnSuccessListener {querySnapshot ->
-                maxNo = querySnapshot.documents[0]["no"] as Long
-            }
-
-        getDatabaseData(docNumber, btnNext, btnPrev)
-
-        Log.d(TAG, "size document : $maxNo")
-
         btnNext.setOnClickListener {
             docNumber += 1
-            getDatabaseData(docNumber, btnNext, btnPrev)
+            check(btnNext, btnPrev)
+            getDatabaseData(docNumber)
         }
 
         btnPrev.setOnClickListener {
             docNumber -= 1
-            getDatabaseData(docNumber, btnNext, btnPrev)
+            check(btnNext, btnPrev)
+            getDatabaseData(docNumber)
         }
     }
 
     private fun getDatabaseData(
-        docNumber: Int,
-        btnNext: FloatingActionButton,
-        btnPrev: FloatingActionButton
+        docNumber: Int
     ) {
         db.whereEqualTo("no", docNumber)
             .get()
@@ -83,8 +81,6 @@ class MateriFragment : Fragment() {
                 Toast.makeText(activity, "ERROR NO DOCUMENT! $exception", Toast.LENGTH_SHORT)
                     .show()
             }
-
-        check(btnNext, btnPrev)
     }
 
     //TODO fix btnNext and btnPrev Bug
@@ -93,23 +89,20 @@ class MateriFragment : Fragment() {
         btnNext: FloatingActionButton,
         btnPrev: FloatingActionButton
     ) {
-        Log.d(TAG, "current document number $docNumber")
-        Log.d(TAG, "get document size from database $maxNo")
-
         when {
+            maxNo == 1L -> {
+                btnPrev.visibility = View.GONE
+                btnNext.visibility = View.GONE
+            }
+
             docNumber.toLong() <= 1L -> {
                 btnNext.visibility = View.VISIBLE
                 btnPrev.visibility = View.GONE
             }
 
-            docNumber.toLong() >= maxNo -> {
+            docNumber.toLong() >= maxNo!! -> {
                 btnNext.visibility = View.GONE
                 btnPrev.visibility = View.VISIBLE
-            }
-
-            maxNo == 1L -> {
-                btnPrev.visibility = View.GONE
-                btnNext.visibility = View.GONE
             }
 
             else -> {
@@ -120,7 +113,8 @@ class MateriFragment : Fragment() {
     }
 
     companion object {
-        const val ID_DOCUMENT = "extra_document"
+        const val ID_DOCUMENT = "extra_no"
+        const val SIZE_DOCUMENT = "extra_size"
 
         private lateinit var tvSubtitle: TextView
         private lateinit var tvContent: TextView
@@ -133,6 +127,6 @@ class MateriFragment : Fragment() {
         private var docNumber = 1
         private var noDocument: Int? = 0
         private var collection = ""
-        private var maxNo: Long = 0L
+        private var maxNo: Long? = 0
     }
 }

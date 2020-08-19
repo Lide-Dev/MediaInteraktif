@@ -5,7 +5,7 @@ apply plugin: 'com.google.gms.google-services'
 
 android {
     compileSdkVersion 30
-    buildToolsVersion "30.0.1"
+    buildToolsVersion '30.0.2'
 
     defaultConfig {
         applicationId "com.mediainteraktif"
@@ -24,8 +24,8 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility kotlin_version
+        targetCompatibility kotlin_version
     }
     kotlinOptions {
         jvmTarget = '1.8'
@@ -48,7 +48,7 @@ dependencies {
     implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
     implementation 'androidx.navigation:navigation-fragment-ktx:2.3.0'
     implementation 'androidx.navigation:navigation-ui-ktx:2.3.0'
-    implementation 'com.google.firebase:firebase-analytics:17.4.4'
+    implementation 'com.google.firebase:firebase-analytics:17.5.0'
     implementation 'com.google.firebase:firebase-auth:19.3.2'
     implementation 'com.google.android.gms:play-services-auth:18.1.0'
 

@@ -12,10 +12,10 @@
         tools:layout="@layout/fragment_home_nav" />
 
     <fragment
-        android:id="@+id/navigation_materi"
-        android:name="com.mediainteraktif.ui.materi.MateriFragmentNav"
-        android:label="@string/materi"
-        tools:layout="@layout/fragment_materi_nav" />
+        android:id="@+id/navigation_latihan"
+        android:name="com.mediainteraktif.ui.latihan.LatihanFragmentNav"
+        android:label="@string/latihan"
+        tools:layout="@layout/fragment_latihan_nav" />
 
     <fragment
         android:id="@+id/navigation_quiz"

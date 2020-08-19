@@ -72,6 +72,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun signIn() {
+        Log.d("GooglesAuths", "Start SignIn()")
         val signInIntent = googleSignInClient.signInIntent
         startActivityForResult(signInIntent, RC_SIGN_IN)
     }
@@ -84,6 +85,7 @@ class LoginActivity : AppCompatActivity() {
             try {
                 val account = task.getResult(ApiException::class.java)!!
                 firebaseAuthWithGoogle(account.idToken!!)
+                Log.w(TAG, "Google sign in Success")
             } catch (e: ApiException) {
                 Log.w(TAG, "Google sign in failed", e)
             }
@@ -93,7 +95,7 @@ class LoginActivity : AppCompatActivity() {
     private fun firebaseAuthWithGoogle(idToken: String) {
         val credential = GoogleAuthProvider.getCredential(idToken, null)
         mAuth.signInWithCredential(credential)
-            .addOnCompleteListener(this) {task ->
+            .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
                     intent = Intent(this, HomeActivity::class.java)
                     startActivity(intent)
@@ -110,7 +112,11 @@ class LoginActivity : AppCompatActivity() {
                     intent = Intent(this, HomeActivity::class.java)
                     startActivity(intent)
                 } else {
-                    Toast.makeText(this, "Failed to Login", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        this,
+                        "Failed to Login, Wrong Password or Email",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             }
     }

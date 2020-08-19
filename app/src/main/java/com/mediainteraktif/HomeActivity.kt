@@ -29,7 +29,7 @@ class HomeActivity : AppCompatActivity() {
         // menu should be considered as top level destinations.
         val appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.navigation_home, R.id.navigation_materi,
+                R.id.navigation_home, R.id.navigation_latihan,
                 R.id.navigation_quiz, R.id.navigation_profile
             )
         )
@@ -46,8 +46,16 @@ class HomeActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item.itemId) {
-//            R.id.daftar_pustaka -> null
-//            R.id.help -> null
+            R.id.daftar_pustaka -> {
+                intent = Intent(this, PustakaActivity::class.java).also {
+                    startActivity(it)
+                }
+            }
+            R.id.help -> {
+                intent = Intent(this, HelpActivity::class.java).also {
+                    startActivity(it)
+                }
+            }
             R.id.logout -> signingOut()
         }
 

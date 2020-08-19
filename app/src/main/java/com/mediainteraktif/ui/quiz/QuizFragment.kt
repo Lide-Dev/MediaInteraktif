@@ -189,7 +189,6 @@ class QuizFragment : Fragment() {
             Log.d("Document", "document path: $docPath")
             getQuestionAndSelection()
             setBtnBackgroundColor(blue, blue, blue, blue, blue)
-            isClickable(false)
         } else if (userAnswer == "-") {
             Toast.makeText(activity, "Tolong pilih jawaban terlebih dahulu", Toast.LENGTH_SHORT)
                 .show()
