@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:padding="@dimen/app_dimen_default">
 
     <TextView
         android:id="@+id/quiz_txt_soal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="1. {SOAL}" />
 
@@ -20,10 +20,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/app_dimen_default"
-        app:layout_constraintStart_toStartOf="parent"
+        android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/quiz_txt_soal"
-        android:orientation="vertical">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/quiz_txt_soal">
 
         <LinearLayout
             android:id="@+id/quiz_layout_jawaban_a"
@@ -32,7 +32,7 @@
             android:background="@drawable/shape_rounded_10dp_corner"
             android:backgroundTint="@color/blue"
             android:gravity="center"
-            android:orientation="horizontal" >
+            android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/quiz_txt_a"
@@ -40,10 +40,10 @@
                 android:layout_height="match_parent"
                 android:background="@drawable/shape_rounded_fill_10dp"
                 android:backgroundTint="@color/blue"
-                android:textColor="@android:color/white"
-                android:textSize="@dimen/text_dimen_title"
+                android:gravity="center"
                 android:text="@string/a"
-                android:gravity="center" />
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/text_dimen_title" />
 
             <TextView
                 android:id="@+id/quiz_txt_jawab_a"
@@ -58,10 +58,10 @@
             android:id="@+id/quiz_layout_jawaban_b"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/app_dimen_default"
             android:background="@drawable/shape_rounded_10dp_corner"
             android:backgroundTint="@color/blue"
             android:gravity="center"
-            android:layout_marginTop="@dimen/app_dimen_default"
             android:orientation="horizontal">
 
             <TextView
@@ -70,10 +70,10 @@
                 android:layout_height="match_parent"
                 android:background="@drawable/shape_rounded_fill_10dp"
                 android:backgroundTint="@color/blue"
-                android:textColor="@android:color/white"
-                android:textSize="@dimen/text_dimen_title"
+                android:gravity="center"
                 android:text="@string/b"
-                android:gravity="center" />
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/text_dimen_title" />
 
             <TextView
                 android:id="@+id/quiz_txt_jawab_b"
@@ -88,10 +88,10 @@
             android:id="@+id/quiz_layout_jawaban_c"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/app_dimen_default"
             android:background="@drawable/shape_rounded_10dp_corner"
             android:backgroundTint="@color/blue"
             android:gravity="center"
-            android:layout_marginTop="@dimen/app_dimen_default"
             android:orientation="horizontal">
 
             <TextView
@@ -100,10 +100,10 @@
                 android:layout_height="match_parent"
                 android:background="@drawable/shape_rounded_fill_10dp"
                 android:backgroundTint="@color/blue"
-                android:textColor="@android:color/white"
-                android:textSize="@dimen/text_dimen_title"
+                android:gravity="center"
                 android:text="@string/c"
-                android:gravity="center" />
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/text_dimen_title" />
 
             <TextView
                 android:id="@+id/quiz_txt_jawab_c"
@@ -118,10 +118,10 @@
             android:id="@+id/quiz_layout_jawaban_d"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/app_dimen_default"
             android:background="@drawable/shape_rounded_10dp_corner"
             android:backgroundTint="@color/blue"
             android:gravity="center"
-            android:layout_marginTop="@dimen/app_dimen_default"
             android:orientation="horizontal">
 
             <TextView
@@ -130,10 +130,10 @@
                 android:layout_height="match_parent"
                 android:background="@drawable/shape_rounded_fill_10dp"
                 android:backgroundTint="@color/blue"
-                android:textColor="@android:color/white"
-                android:textSize="@dimen/text_dimen_title"
+                android:gravity="center"
                 android:text="@string/d"
-                android:gravity="center" />
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/text_dimen_title" />
 
             <TextView
                 android:id="@+id/quiz_txt_jawab_d"
@@ -148,10 +148,10 @@
             android:id="@+id/quiz_layout_jawaban_e"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/app_dimen_default"
             android:background="@drawable/shape_rounded_10dp_corner"
             android:backgroundTint="@color/blue"
             android:gravity="center"
-            android:layout_marginTop="@dimen/app_dimen_default"
             android:orientation="horizontal">
 
             <TextView
@@ -160,10 +160,10 @@
                 android:layout_height="match_parent"
                 android:background="@drawable/shape_rounded_fill_10dp"
                 android:backgroundTint="@color/blue"
-                android:textColor="@android:color/white"
-                android:textSize="@dimen/text_dimen_title"
+                android:gravity="center"
                 android:text="@string/e"
-                android:gravity="center" />
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/text_dimen_title" />
 
             <TextView
                 android:id="@+id/quiz_txt_jawab_e"
@@ -180,56 +180,55 @@
         android:id="@+id/quiz_btn_submit"
         android:layout_width="200dp"
         android:layout_height="50dp"
-        android:visibility="visible"
         android:layout_marginTop="@dimen/app_dimen_default"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/quiz_layout_jawaban"
         android:background="@drawable/shape_rounded_fill_10dp"
         android:backgroundTint="#FEC001"
         android:text="@string/submit"
+        android:textColor="@android:color/white"
         android:textSize="@dimen/text_dimen_title"
         android:textStyle="bold"
-        android:textColor="@android:color/white" />
+        android:visibility="visible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/quiz_layout_jawaban" />
 
     <LinearLayout
         android:id="@+id/quiz_layout_trysee"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/app_dimen_default"
         android:gravity="center_horizontal"
         android:orientation="horizontal"
-        android:layout_marginTop="@dimen/app_dimen_default"
-        app:layout_constraintStart_toStartOf="parent"
+        android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/quiz_layout_jawaban"
-        android:visibility="invisible" >
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/quiz_layout_jawaban">
 
         <Button
-            style="@style/AppTheme"
             android:id="@+id/quiz_btn_tryagain"
+            style="@style/AppTheme"
             android:layout_width="150dp"
             android:layout_height="50dp"
             android:background="@drawable/shape_rounded_fill_10dp"
             android:backgroundTint="#E95050"
             android:text="@string/ulangi"
-            android:textStyle="bold"
             android:textColor="@android:color/white"
-            android:textSize="18sp" />
+            android:textSize="18sp"
+            android:textStyle="bold" />
 
         <Button
-            style="@style/AppTheme"
             android:id="@+id/quiz_btn_hints"
+            style="@style/AppTheme"
             android:layout_width="150dp"
             android:layout_height="50dp"
             android:layout_marginStart="@dimen/app_dimen_default"
             android:background="@drawable/shape_rounded_fill_10dp"
             android:backgroundTint="#37D159"
             android:text="@string/lihat_jawaban"
-            android:textStyle="bold"
             android:textColor="@android:color/white"
-            android:textSize="18sp"/>
+            android:textSize="18sp"
+            android:textStyle="bold" />
 
     </LinearLayout>
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -22,7 +22,6 @@ import com.mediainteraktif.MateriActivity
 import com.mediainteraktif.R
 import com.mediainteraktif.adapter.HomeAdapter
 import com.mediainteraktif.model.HomeModel
-import com.mediainteraktif.ui.materi.MateriFragment
 import com.mediainteraktif.ui.materi.MateriFragment.Companion.ID_DOCUMENT
 import com.mediainteraktif.ui.materi.MateriFragment.Companion.SIZE_DOCUMENT
 
@@ -30,7 +29,7 @@ class HomeFragmentNav : Fragment(), HomeAdapter.OnItemClickListener {
     private lateinit var mAuth: FirebaseAuth
     private lateinit var mFirestore: FirebaseFirestore
     private lateinit var db: CollectionReference
-    private lateinit var adapter: HomeAdapter
+    private lateinit var homeAdapter: HomeAdapter
 
     @SuppressLint("SetTextI18n")
     override fun onCreateView(
@@ -55,13 +54,13 @@ class HomeFragmentNav : Fragment(), HomeAdapter.OnItemClickListener {
 
     override fun onStart() {
         super.onStart()
-        adapter.startListening()
+        homeAdapter.startListening()
     }
 
     override fun onStop() {
         super.onStop()
 
-        adapter.stopListening()
+        homeAdapter.stopListening()
     }
 
     fun getData(view: View) {
@@ -76,9 +75,9 @@ class HomeFragmentNav : Fragment(), HomeAdapter.OnItemClickListener {
         rvMateri.layoutManager =
             LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
 
-        adapter = HomeAdapter(options)
-        adapter.setOnItemClickListener(this)
-        rvMateri.adapter = adapter
+        homeAdapter = HomeAdapter(options)
+        homeAdapter.setOnItemClickListener(this)
+        rvMateri.adapter = homeAdapter
     }
 
     override fun onItemClick(documentSnapshot: DocumentSnapshot, pos: Int) {

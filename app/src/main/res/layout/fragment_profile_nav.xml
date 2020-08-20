@@ -41,9 +41,10 @@
             android:id="@+id/profile_txt_username"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="14sp"
+            android:text="@string/putri_sherly_indrayanti"
             android:textColor="@color/littleBlue"
-            tools:text="{NAME_USER}" />
+            android:textStyle="bold"
+            android:textSize="18sp" />
     </LinearLayout>
 
     <LinearLayout
@@ -68,9 +69,10 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="14sp"
+            android:textSize="18sp"
             android:textColor="@color/littleBlue"
-            tools:text="{NAME_DOSBING}" />
+            android:text="@string/dosbing"
+            android:textStyle="bold"/>
     </LinearLayout>
 
     <LinearLayout
@@ -87,7 +89,8 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            tools:text="{name_jurpend}"
+            android:textAlignment="center"
+            android:text="@string/jurpend"
             android:textColor="@color/littleBlue"
             android:textSize="18sp"
             android:textStyle="bold"/>

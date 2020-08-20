@@ -10,10 +10,12 @@ import com.firebase.ui.firestore.FirestoreRecyclerAdapter
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
 import com.google.firebase.firestore.DocumentSnapshot
 import com.mediainteraktif.R
+import com.mediainteraktif.adapter.HomeAdapter.HomeViewHolder
 import com.mediainteraktif.model.HomeModel
+import com.mediainteraktif.model.LatihanModel
 
 class HomeAdapter internal constructor(options: FirestoreRecyclerOptions<HomeModel>) :
-    FirestoreRecyclerAdapter<HomeModel, HomeAdapter.HomeViewHolder>(options) {
+    FirestoreRecyclerAdapter<HomeModel, HomeViewHolder>(options) {
 
     private lateinit var listener: OnItemClickListener
 
@@ -44,7 +46,7 @@ class HomeAdapter internal constructor(options: FirestoreRecyclerOptions<HomeMod
         internal fun clicking() {
             view.setOnClickListener {
                 val pos: Int = adapterPosition
-                if (pos != RecyclerView.NO_POSITION && listener != null) {
+                if (pos != RecyclerView.NO_POSITION) {
                     listener.onItemClick(snapshots.getSnapshot(pos), pos)
                 }
 
