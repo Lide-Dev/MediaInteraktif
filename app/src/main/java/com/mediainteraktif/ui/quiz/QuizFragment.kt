@@ -9,48 +9,16 @@ import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore
 import com.mediainteraktif.R
+import org.w3c.dom.Text
 
 @Suppress("unused")
 class QuizFragment : Fragment() {
-
-    companion object {
-        private lateinit var mFirestore: FirebaseFirestore
-        private lateinit var db: CollectionReference
-
-        private lateinit var btnJawabA: LinearLayout
-        private lateinit var btnJawabB: LinearLayout
-        private lateinit var btnJawabC: LinearLayout
-        private lateinit var btnJawabD: LinearLayout
-        private lateinit var btnJawabE: LinearLayout
-        private lateinit var trySeeLayout: LinearLayout
-        private lateinit var btnSubmit: Button
-        private lateinit var btnTry: Button
-        private lateinit var btnSee: Button
-        private lateinit var txtSoal: TextView
-        private lateinit var txtA: TextView
-        private lateinit var txtB: TextView
-        private lateinit var txtC: TextView
-        private lateinit var txtD: TextView
-        private lateinit var txtE: TextView
-        private lateinit var txtJawabA: TextView
-        private lateinit var txtJawabB: TextView
-        private lateinit var txtJawabC: TextView
-        private lateinit var txtJawabD: TextView
-        private lateinit var txtJawabE: TextView
-
-        private var blue = 1
-        private var green = 1
-        private var red = 1
-        private var documentNumber = 1
-        private var docPath = ""
-        private var realAnswer = "F"
-        private var userAnswer = "-"
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -85,6 +53,12 @@ class QuizFragment : Fragment() {
         btnTry = root.findViewById(R.id.quiz_btn_tryagain)
         btnSee = root.findViewById(R.id.quiz_btn_hints)
 
+        layoutContent = root.findViewById(R.id.quiz_layout_content)
+        layoutStart = root.findViewById(R.id.quiz_layout_start)
+        btnStart = root.findViewById(R.id.quiz_btn_start)
+
+        layoutContent.visibility = View.GONE
+
         green = ContextCompat.getColor(requireContext(), R.color.green)
         blue = ContextCompat.getColor(requireContext(), R.color.blue)
         red = ContextCompat.getColor(requireContext(), R.color.red)
@@ -98,7 +72,6 @@ class QuizFragment : Fragment() {
         docPath = "Quiz$documentNumber"
 
         isClickable(true)
-        getQuestionAndSelection()
 
         btnJawabA.setOnClickListener(onClickBtnSelection("a"))
         btnJawabB.setOnClickListener(onClickBtnSelection("b"))
@@ -108,6 +81,13 @@ class QuizFragment : Fragment() {
         btnSubmit.setOnClickListener(onClickBtnSubmit())
         btnTry.setOnClickListener(onClickTryAgain())
         btnSee.setOnClickListener(onClickHints())
+        btnStart.setOnClickListener(onCLickStart())
+    }
+
+    private fun onCLickStart() = View.OnClickListener {
+        layoutStart.visibility = View.GONE
+        layoutContent.visibility = View.VISIBLE
+        getQuestionAndSelection()
     }
 
     private fun onClickHints() = View.OnClickListener {
@@ -162,7 +142,6 @@ class QuizFragment : Fragment() {
     private fun onClickBtnSelection(selection: String) =
         View.OnClickListener {
             userAnswer = selection
-
             when (selection) {
                 "a" -> {
                     setBtnBackgroundColor(green, blue, blue, blue, blue)
@@ -240,5 +219,42 @@ class QuizFragment : Fragment() {
         txtD.background.setTint(d)
         btnJawabE.background.setTint(e)
         txtE.background.setTint(e)
+    }
+
+    companion object {
+        private lateinit var mFirestore: FirebaseFirestore
+        private lateinit var db: CollectionReference
+
+        private lateinit var btnJawabA: LinearLayout
+        private lateinit var btnJawabB: LinearLayout
+        private lateinit var btnJawabC: LinearLayout
+        private lateinit var btnJawabD: LinearLayout
+        private lateinit var btnJawabE: LinearLayout
+        private lateinit var trySeeLayout: LinearLayout
+        private lateinit var layoutContent: ConstraintLayout
+        private lateinit var layoutStart: ConstraintLayout
+        private lateinit var btnSubmit: Button
+        private lateinit var btnTry: Button
+        private lateinit var btnSee: Button
+        private lateinit var txtSoal: TextView
+        private lateinit var txtA: TextView
+        private lateinit var txtB: TextView
+        private lateinit var txtC: TextView
+        private lateinit var txtD: TextView
+        private lateinit var txtE: TextView
+        private lateinit var txtJawabA: TextView
+        private lateinit var txtJawabB: TextView
+        private lateinit var txtJawabC: TextView
+        private lateinit var txtJawabD: TextView
+        private lateinit var txtJawabE: TextView
+        private lateinit var btnStart: TextView
+
+        private var blue = 1
+        private var green = 1
+        private var red = 1
+        private var documentNumber = 1
+        private var docPath = ""
+        private var realAnswer = "F"
+        private var userAnswer = "-"
     }
 }
