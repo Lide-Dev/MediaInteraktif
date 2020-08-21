@@ -15,14 +15,6 @@
       },
       "oauth_client": [
         {
-          "client_id": "18174211545-jua0k3438o5a5dg679hcnc1v1pd8b1ih.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.mediainteraktif",
-            "certificate_hash": "87c3d065d7acf97cc31fc17e5ee7e2d0f3d03abc"
-          }
-        },
-        {
           "client_id": "18174211545-s1c77tq44qk42i4gkgk2hpb1e0cf2563.apps.googleusercontent.com",
           "client_type": 3
         }

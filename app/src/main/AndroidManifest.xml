@@ -22,6 +22,8 @@
         <activity android:name=".MateriActivity" />
         <activity android:name=".QuizActivity" />
         <activity android:name=".KompetensiActivity" />
+        <activity android:name=".LatihanActivity" />
+        <activity android:name=".PustakaActivity" />
 
         <meta-data
             android:name="preloaded_fonts"

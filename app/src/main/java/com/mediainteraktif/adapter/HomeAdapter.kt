@@ -49,7 +49,6 @@ class HomeAdapter internal constructor(options: FirestoreRecyclerOptions<HomeMod
                 if (pos != RecyclerView.NO_POSITION) {
                     listener.onItemClick(snapshots.getSnapshot(pos), pos)
                 }
-
             }
         }
     }

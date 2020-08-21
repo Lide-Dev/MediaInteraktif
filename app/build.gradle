@@ -4,6 +4,14 @@ apply plugin: 'kotlin-android-extensions'
 apply plugin: 'com.google.gms.google-services'
 
 android {
+    signingConfigs {
+        config {
+            storeFile file('C:\\Users\\DESKTOP-PC\\.android\\debugKey.keystore')
+            storePassword 'X45g7jKl8'
+            keyAlias 'debugKey'
+            keyPassword 'X45g7jKl8'
+        }
+    }
     compileSdkVersion 30
     buildToolsVersion '30.0.2'
 
@@ -12,9 +20,10 @@ android {
         minSdkVersion 21
         targetSdkVersion 30
         versionCode 1
-        versionName "1.0"
+        versionName kotlin_version
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        signingConfig signingConfigs.config
     }
 
     buildTypes {

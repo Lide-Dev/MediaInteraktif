@@ -15,19 +15,11 @@
       },
       "oauth_client": [
         {
-          "client_id": "18174211545-75hhs7d430rv2m1crb6hdied787qmb1u.apps.googleusercontent.com",
+          "client_id": "18174211545-2a2akiqqqakjqiei6og3c20npnvqqopn.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.mediainteraktif",
-            "certificate_hash": "dc4bf6dfa743776ab4701bef4930fd3ba7c951cd"
-          }
-        },
-        {
-          "client_id": "18174211545-k0c68pl001t3bls21pnfqqgk1fuuqvsv.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.mediainteraktif",
-            "certificate_hash": "715e01533b41c5f87e01506f92d03057928d1fd0"
+            "certificate_hash": "d0a8a4f6d8040aafa438055398e49a650e2a4808"
           }
         },
         {
