@@ -7,6 +7,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -19,17 +20,22 @@ import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
 import com.mediainteraktif.MateriActivity
+import com.mediainteraktif.MateriActivity.Companion.TITLEDOC
 import com.mediainteraktif.R
 import com.mediainteraktif.adapter.HomeAdapter
 import com.mediainteraktif.model.HomeModel
-import com.mediainteraktif.ui.materi.MateriFragment.Companion.ID_DOCUMENT
-import com.mediainteraktif.ui.materi.MateriFragment.Companion.SIZE_DOCUMENT
+import com.mediainteraktif.ui.materi.MateriFragment.Companion.IDDOCUMENT
+import com.mediainteraktif.ui.materi.MateriFragment.Companion.SIZEDOCUMENT
 
 class HomeFragmentNav : Fragment(), HomeAdapter.OnItemClickListener {
     private lateinit var mAuth: FirebaseAuth
     private lateinit var mFirestore: FirebaseFirestore
     private lateinit var db: CollectionReference
     private lateinit var homeAdapter: HomeAdapter
+    private lateinit var rvMateri: RecyclerView
+    private lateinit var mUser: FirebaseUser
+
+    private lateinit var txtWelcome: TextView
 
     @SuppressLint("SetTextI18n")
     override fun onCreateView(
@@ -38,18 +44,26 @@ class HomeFragmentNav : Fragment(), HomeAdapter.OnItemClickListener {
         savedInstanceState: Bundle?
     ): View? {
         val root = inflater.inflate(R.layout.fragment_home_nav, container, false)
+        txtWelcome = root.findViewById(R.id.welcome)
+        rvMateri = root.findViewById(R.id.home_rv_materi)
 
         mAuth = FirebaseAuth.getInstance()
-        val mUser: FirebaseUser? = mAuth.currentUser
+        mUser = mAuth.currentUser!!
         mFirestore = FirebaseFirestore.getInstance()
 
-        val txtWelcome: TextView = root.findViewById(R.id.welcome)
-
-        txtWelcome.text = "Selamat Datang ${mUser?.displayName}"
-
-        getData(root)
+        rvMateri.visibility = View.GONE
 
         return root
+    }
+
+    @SuppressLint("SetTextI18n")
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        txtWelcome.text = "Selamat Datang ${mUser.displayName}"
+        rvMateri.visibility = View.VISIBLE
+
+        getData()
     }
 
     override fun onStart() {
@@ -63,7 +77,7 @@ class HomeFragmentNav : Fragment(), HomeAdapter.OnItemClickListener {
         homeAdapter.stopListening()
     }
 
-    fun getData(view: View) {
+    fun getData() {
         val collectionReference = mFirestore.collection("listMateri")
         val query = collectionReference.orderBy("no_materi", Query.Direction.ASCENDING)
         val options = FirestoreRecyclerOptions
@@ -71,7 +85,6 @@ class HomeFragmentNav : Fragment(), HomeAdapter.OnItemClickListener {
             .setQuery(query, HomeModel::class.java)
             .build()
 
-        val rvMateri: RecyclerView = view.findViewById(R.id.home_rv_materi)
         rvMateri.layoutManager =
             LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
 
@@ -82,6 +95,7 @@ class HomeFragmentNav : Fragment(), HomeAdapter.OnItemClickListener {
 
     override fun onItemClick(documentSnapshot: DocumentSnapshot, pos: Int) {
         var maxNo = 0L
+        val title = "Materi ${pos+1}"
 
         db = mFirestore.collection("Materi${pos+1}")
         db.orderBy("no", Query.Direction.DESCENDING)
@@ -91,8 +105,9 @@ class HomeFragmentNav : Fragment(), HomeAdapter.OnItemClickListener {
                 Log.d("DOCUMENT", "Success get document size $maxNo")
 
                 val i = Intent(activity, MateriActivity::class.java).also {
-                    it.putExtra(ID_DOCUMENT, pos+1)
-                    it.putExtra(SIZE_DOCUMENT, maxNo)
+                    it.putExtra(IDDOCUMENT, pos+1)
+                    it.putExtra(SIZEDOCUMENT, maxNo)
+                    it.putExtra(TITLEDOC, title)
                 }
                 startActivity(i)
             }

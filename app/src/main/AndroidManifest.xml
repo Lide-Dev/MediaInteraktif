@@ -24,6 +24,7 @@
         <activity android:name=".KompetensiActivity" />
         <activity android:name=".LatihanActivity" />
         <activity android:name=".PustakaActivity" />
+        <activity android:name=".HelpActivity" />
 
         <meta-data
             android:name="preloaded_fonts"

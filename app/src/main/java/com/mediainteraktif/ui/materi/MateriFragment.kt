@@ -30,11 +30,13 @@ class MateriFragment : Fragment() {
         btnPrev = root.findViewById(R.id.materi_btn_prev)
         materiActivity = MateriActivity()
 
+        docNumber = 1
+
         btnNext.visibility = View.GONE
         btnPrev.visibility = View.GONE
 
-        noDocument = activity?.intent?.getIntExtra(ID_DOCUMENT, 0)
-        maxNo = activity?.intent?.getLongExtra(SIZE_DOCUMENT, 0L)
+        noDocument = activity?.intent?.getIntExtra(IDDOCUMENT, 0)
+        maxNo = activity?.intent?.getLongExtra(SIZEDOCUMENT, 0L)
 
         Log.d("DOCUMENT", "noDocument get from Intent : $noDocument")
         Log.d("DOCUMENT", "maxNo get from Intent : $maxNo")
@@ -113,8 +115,8 @@ class MateriFragment : Fragment() {
     }
 
     companion object {
-        const val ID_DOCUMENT = "extra_no"
-        const val SIZE_DOCUMENT = "extra_size"
+        const val IDDOCUMENT = "extra_no"
+        const val SIZEDOCUMENT = "extra_size"
 
         private lateinit var tvSubtitle: TextView
         private lateinit var tvContent: TextView

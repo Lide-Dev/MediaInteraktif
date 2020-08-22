@@ -21,6 +21,8 @@ class MateriActivity : AppCompatActivity() {
                 .add(R.id.materi_fragment, materifragment)
                 .commit()
         }
+
+        supportActionBar?.title = intent.getStringExtra(TITLEDOC)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -40,5 +42,9 @@ class MateriActivity : AppCompatActivity() {
 //        }
 
         return super.onOptionsItemSelected(item)
+    }
+
+    companion object {
+        const val TITLEDOC = "extra_title"
     }
 }

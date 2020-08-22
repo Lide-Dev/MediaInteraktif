@@ -38,7 +38,7 @@ class HomeAdapter internal constructor(options: FirestoreRecyclerOptions<HomeMod
         lateinit var tvTitle: TextView
 
         internal fun setTitle(title: String) {
-            tvTitle = view.findViewById<TextView>(R.id.materi_rv_txt)
+            tvTitle = view.findViewById(R.id.materi_rv_txt)
             tvTitle.text = title
         }
 

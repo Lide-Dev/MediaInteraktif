@@ -46,4 +46,7 @@
     <string name="jurpend">JURUSAN PENDIDIKAN\nADMINISTRASI PERKANTORAN\nFE UNY</string>
     <string name="dosbing">DRS. PURWANTO, M.M , M.Pd</string>
     <string name="jawab">Jawab</string>
+    <string name="welcome">welcome</string>
+    <string name="quiz">Quiz</string>
+    <string name="click_for_continue">Klik untuk lanjut</string>
 </resources>

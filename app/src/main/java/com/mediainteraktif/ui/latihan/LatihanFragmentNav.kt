@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.mediainteraktif.LatihanActivity
@@ -27,7 +28,7 @@ class LatihanFragmentNav : Fragment(), LatihanAdapter.OnItemClickListener {
 
         recyclerView = root.findViewById(R.id.latihan_rv)
         recyclerView.setHasFixedSize(false)
-        recyclerView.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
+        recyclerView.layoutManager = GridLayoutManager(context, 2)
         recyclerView.adapter = adapter
         adapter.setOnItemClickListener(this)
 

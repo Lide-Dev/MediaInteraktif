@@ -3,12 +3,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="70dp"
+    android:layout_height="200dp"
     android:layout_marginStart="@dimen/app_dimen_default"
     android:layout_marginBottom="@dimen/app_dimen_default"
     android:layout_marginEnd="@dimen/app_dimen_default"
-    android:background="@drawable/shape_rounded_10dp_corner"
-    android:backgroundTint="@color/littleBlue"
+    android:background="@color/green"
     android:padding="@dimen/app_dimen_default">
     
     <TextView
@@ -16,11 +15,11 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:textAllCaps="true"
-        android:textSize="@dimen/text_dimen_title"
+        android:textSize="14sp"
         android:textStyle="bold"
+        android:gravity="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="Latihan 1" />

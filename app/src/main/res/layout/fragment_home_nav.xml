@@ -30,7 +30,7 @@
                 android:textColor="@android:color/white"
                 android:textSize="20sp"
                 android:textStyle="bold"
-                android:text="welcome"
+                android:text="@string/welcome"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="Selamat Datang {Person_FirstName}" />
@@ -71,26 +71,5 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/home_txt_pilihan_materi" />
-
-        <TextView
-            android:id="@+id/home_txt_pilihan_video"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/app_dimen_default"
-            android:text="@string/pilihan_video"
-            android:textSize="@dimen/text_dimen_title"
-            android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/home_rv_materi" />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/home_rv_video"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/app_dimen_default"
-            android:padding="@dimen/app_dimen_default"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/home_txt_pilihan_video" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

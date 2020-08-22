@@ -1,24 +1,21 @@
 package com.mediainteraktif.ui.quiz
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.LinearLayout
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore
 import com.mediainteraktif.R
-import org.w3c.dom.Text
 
 @Suppress("unused")
-class QuizFragment : Fragment() {
+class QuizFragmentNav : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -30,34 +27,11 @@ class QuizFragment : Fragment() {
         mFirestore = FirebaseFirestore.getInstance()
         db = mFirestore.collection("Quiz")
 
-        btnJawabA = root.findViewById(R.id.quiz_layout_jawaban_a)
-        btnJawabB = root.findViewById(R.id.quiz_layout_jawaban_b)
-        btnJawabC = root.findViewById(R.id.quiz_layout_jawaban_c)
-        btnJawabD = root.findViewById(R.id.quiz_layout_jawaban_d)
-        btnJawabE = root.findViewById(R.id.quiz_layout_jawaban_e)
-        btnSubmit = root.findViewById(R.id.quiz_btn_submit)
+        initializing(root)
 
-        txtSoal = root.findViewById(R.id.quiz_txt_soal)
-        txtJawabA = root.findViewById(R.id.quiz_txt_jawab_a)
-        txtJawabB = root.findViewById(R.id.quiz_txt_jawab_b)
-        txtJawabC = root.findViewById(R.id.quiz_txt_jawab_c)
-        txtJawabD = root.findViewById(R.id.quiz_txt_jawab_d)
-        txtJawabE = root.findViewById(R.id.quiz_txt_jawab_e)
-        txtA = root.findViewById(R.id.quiz_txt_a)
-        txtB = root.findViewById(R.id.quiz_txt_b)
-        txtC = root.findViewById(R.id.quiz_txt_c)
-        txtD = root.findViewById(R.id.quiz_txt_d)
-        txtE = root.findViewById(R.id.quiz_txt_e)
-
-        trySeeLayout = root.findViewById(R.id.quiz_layout_trysee)
-        btnTry = root.findViewById(R.id.quiz_btn_tryagain)
-        btnSee = root.findViewById(R.id.quiz_btn_hints)
-
-        layoutContent = root.findViewById(R.id.quiz_layout_content)
-        layoutStart = root.findViewById(R.id.quiz_layout_start)
-        btnStart = root.findViewById(R.id.quiz_btn_start)
-
+        layoutDialogue.visibility = View.GONE
         layoutContent.visibility = View.GONE
+        layoutStart.visibility = View.VISIBLE
 
         green = ContextCompat.getColor(requireContext(), R.color.green)
         blue = ContextCompat.getColor(requireContext(), R.color.blue)
@@ -66,12 +40,46 @@ class QuizFragment : Fragment() {
         return root
     }
 
+    private fun initializing(view: View) {
+        btnJawabA = view.findViewById(R.id.quiz_layout_jawaban_a)
+        btnJawabB = view.findViewById(R.id.quiz_layout_jawaban_b)
+        btnJawabC = view.findViewById(R.id.quiz_layout_jawaban_c)
+        btnJawabD = view.findViewById(R.id.quiz_layout_jawaban_d)
+        btnJawabE = view.findViewById(R.id.quiz_layout_jawaban_e)
+        btnSubmit = view.findViewById(R.id.quiz_btn_submit)
+
+        txtSoal = view.findViewById(R.id.quiz_txt_soal)
+        txtJawabA = view.findViewById(R.id.quiz_txt_jawab_a)
+        txtJawabB = view.findViewById(R.id.quiz_txt_jawab_b)
+        txtJawabC = view.findViewById(R.id.quiz_txt_jawab_c)
+        txtJawabD = view.findViewById(R.id.quiz_txt_jawab_d)
+        txtJawabE = view.findViewById(R.id.quiz_txt_jawab_e)
+        txtA = view.findViewById(R.id.quiz_txt_a)
+        txtB = view.findViewById(R.id.quiz_txt_b)
+        txtC = view.findViewById(R.id.quiz_txt_c)
+        txtD = view.findViewById(R.id.quiz_txt_d)
+        txtE = view.findViewById(R.id.quiz_txt_e)
+
+        trySeeLayout = view.findViewById(R.id.quiz_layout_trysee)
+        btnTry = view.findViewById(R.id.quiz_btn_tryagain)
+        btnSee = view.findViewById(R.id.quiz_btn_hints)
+
+        containerDialogue = view.findViewById(R.id.quiz_container_dialogue)
+        layoutContent = view.findViewById(R.id.quiz_layout_content)
+        layoutStart = view.findViewById(R.id.quiz_layout_start)
+        btnStart = view.findViewById(R.id.quiz_btn_start)
+
+        layoutDialogue = view.findViewById(R.id.quiz_layout_dialogue)
+        imgDialogue = view.findViewById(R.id.quiz_img_dialogue)
+        txtDialogue = view.findViewById(R.id.quiz_txt_dialogue)
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         docPath = "Quiz$documentNumber"
 
-        isClickable(true)
+        isAnsClickable(true)
 
         btnJawabA.setOnClickListener(onClickBtnSelection("a"))
         btnJawabB.setOnClickListener(onClickBtnSelection("b"))
@@ -82,6 +90,11 @@ class QuizFragment : Fragment() {
         btnTry.setOnClickListener(onClickTryAgain())
         btnSee.setOnClickListener(onClickHints())
         btnStart.setOnClickListener(onCLickStart())
+        layoutDialogue.setOnClickListener(onClickCloseDialogue())
+    }
+
+    private fun onClickCloseDialogue() = View.OnClickListener {
+        layoutDialogue.visibility = View.GONE
     }
 
     private fun onCLickStart() = View.OnClickListener {
@@ -111,7 +124,7 @@ class QuizFragment : Fragment() {
         btnSee.visibility = View.INVISIBLE
     }
 
-    private fun ifWrong() {
+    private fun isWrong() {
         when (userAnswer) {
             "a" -> {
                 setBtnBackgroundColor(red, blue, blue, blue, blue)
@@ -135,7 +148,7 @@ class QuizFragment : Fragment() {
         setBtnBackgroundColor(blue, blue, blue, blue, blue)
         trySeeLayout.visibility = View.GONE
         btnSubmit.visibility = View.VISIBLE
-        isClickable(true)
+        isAnsClickable(true)
         userAnswer = "-"
     }
 
@@ -168,6 +181,7 @@ class QuizFragment : Fragment() {
             Log.d("Document", "document path: $docPath")
             getQuestionAndSelection()
             setBtnBackgroundColor(blue, blue, blue, blue, blue)
+            showAnswerDialogue(true)
         } else if (userAnswer == "-") {
             Toast.makeText(activity, "Tolong pilih jawaban terlebih dahulu", Toast.LENGTH_SHORT)
                 .show()
@@ -176,8 +190,9 @@ class QuizFragment : Fragment() {
             trySeeLayout.visibility = View.VISIBLE
             btnSee.visibility = View.VISIBLE
             btnTry.visibility = View.VISIBLE
-            isClickable(false)
-            ifWrong()
+            isWrong()
+            isAnsClickable(false)
+            showAnswerDialogue(false)
         }
     }
 
@@ -200,7 +215,7 @@ class QuizFragment : Fragment() {
             }
     }
 
-    private fun isClickable(ans: Boolean) {
+    private fun isAnsClickable(ans: Boolean) {
         btnJawabA.isClickable = ans
         btnJawabB.isClickable = ans
         btnJawabC.isClickable = ans
@@ -221,6 +236,27 @@ class QuizFragment : Fragment() {
         txtE.background.setTint(e)
     }
 
+    @SuppressLint("SetTextI18n")
+    private fun showAnswerDialogue(ans: Boolean) {
+        when (ans) {
+            true -> {
+                containerDialogue.background.setTint(green)
+                imgDialogue.background =
+                    ContextCompat.getDrawable(requireContext(), R.drawable.ic_baseline_check_24)
+                txtDialogue.text = "Benar"
+                layoutDialogue.visibility = View.VISIBLE
+            }
+
+            false -> {
+                containerDialogue.background.setTint(red)
+                imgDialogue.background =
+                    ContextCompat.getDrawable(requireContext(), R.drawable.ic_baseline_close_24)
+                txtDialogue.text = "Salah"
+                layoutDialogue.visibility = View.VISIBLE
+            }
+        }
+    }
+
     companion object {
         private lateinit var mFirestore: FirebaseFirestore
         private lateinit var db: CollectionReference
@@ -237,17 +273,25 @@ class QuizFragment : Fragment() {
         private lateinit var btnTry: Button
         private lateinit var btnSee: Button
         private lateinit var txtSoal: TextView
+
         private lateinit var txtA: TextView
         private lateinit var txtB: TextView
         private lateinit var txtC: TextView
         private lateinit var txtD: TextView
         private lateinit var txtE: TextView
+
         private lateinit var txtJawabA: TextView
         private lateinit var txtJawabB: TextView
         private lateinit var txtJawabC: TextView
         private lateinit var txtJawabD: TextView
         private lateinit var txtJawabE: TextView
+
         private lateinit var btnStart: TextView
+
+        private lateinit var layoutDialogue: ConstraintLayout
+        private lateinit var containerDialogue: LinearLayout
+        private lateinit var txtDialogue: TextView
+        private lateinit var imgDialogue: ImageView
 
         private var blue = 1
         private var green = 1
