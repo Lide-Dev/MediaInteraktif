@@ -22,7 +22,7 @@ class QuizFragmentNav : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val root = inflater.inflate(R.layout.fragment_quiz, container, false)
+        val root = inflater.inflate(R.layout.fragment_quiz_nav, container, false)
 
         mFirestore = FirebaseFirestore.getInstance()
         db = mFirestore.collection("Quiz")
@@ -48,6 +48,7 @@ class QuizFragmentNav : Fragment() {
         btnJawabE = view.findViewById(R.id.quiz_layout_jawaban_e)
         btnSubmit = view.findViewById(R.id.quiz_btn_submit)
 
+        imgSoal = view.findViewById(R.id.quiz_img_soal)
         txtSoal = view.findViewById(R.id.quiz_txt_soal)
         txtJawabA = view.findViewById(R.id.quiz_txt_jawab_a)
         txtJawabB = view.findViewById(R.id.quiz_txt_jawab_b)
@@ -72,6 +73,9 @@ class QuizFragmentNav : Fragment() {
         layoutDialogue = view.findViewById(R.id.quiz_layout_dialogue)
         imgDialogue = view.findViewById(R.id.quiz_img_dialogue)
         txtDialogue = view.findViewById(R.id.quiz_txt_dialogue)
+
+        layoutResult = view.findViewById(R.id.quiz_layout_result)
+        txtResult = view.findViewById(R.id.quiz_txt_result)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -89,7 +93,7 @@ class QuizFragmentNav : Fragment() {
         btnSubmit.setOnClickListener(onClickBtnSubmit())
         btnTry.setOnClickListener(onClickTryAgain())
         btnSee.setOnClickListener(onClickHints())
-        btnStart.setOnClickListener(onCLickStart())
+        btnStart.setOnClickListener(onClickStart())
         layoutDialogue.setOnClickListener(onClickCloseDialogue())
     }
 
@@ -97,10 +101,19 @@ class QuizFragmentNav : Fragment() {
         layoutDialogue.visibility = View.GONE
     }
 
-    private fun onCLickStart() = View.OnClickListener {
-        layoutStart.visibility = View.GONE
-        layoutContent.visibility = View.VISIBLE
-        getQuestionAndSelection()
+    private fun onClickStart() = View.OnClickListener {
+        if(isDone) {
+            txtResult.text = finalResult.toString()
+            Toast.makeText(activity, "anda sudah selesai mengerjakan quiz", Toast.LENGTH_SHORT)
+                .show()
+            layoutStart.visibility = View.GONE
+            layoutContent.visibility = View.GONE
+            layoutResult.visibility = View.VISIBLE
+        } else {
+            layoutStart.visibility = View.GONE
+            layoutContent.visibility = View.VISIBLE
+            getQuestionAndSelection()
+        }
     }
 
     private fun onClickHints() = View.OnClickListener {
@@ -149,7 +162,7 @@ class QuizFragmentNav : Fragment() {
         trySeeLayout.visibility = View.GONE
         btnSubmit.visibility = View.VISIBLE
         isAnsClickable(true)
-        userAnswer = "-"
+        userAnswer = ""
     }
 
     private fun onClickBtnSelection(selection: String) =
@@ -175,39 +188,80 @@ class QuizFragmentNav : Fragment() {
         }
 
     private fun onClickBtnSubmit() = View.OnClickListener {
-        if (userAnswer == realAnswer) {
-            documentNumber += 1
-            docPath = "Quiz$documentNumber"
-            Log.d("Document", "document path: $docPath")
-            getQuestionAndSelection()
-            setBtnBackgroundColor(blue, blue, blue, blue, blue)
-            showAnswerDialogue(true)
-        } else if (userAnswer == "-") {
-            Toast.makeText(activity, "Tolong pilih jawaban terlebih dahulu", Toast.LENGTH_SHORT)
-                .show()
-        } else {
-            btnSubmit.visibility = View.GONE
-            trySeeLayout.visibility = View.VISIBLE
-            btnSee.visibility = View.VISIBLE
-            btnTry.visibility = View.VISIBLE
-            isWrong()
-            isAnsClickable(false)
-            showAnswerDialogue(false)
+        when {
+            userAnswer == realAnswer -> {
+                documentNumber += 1
+                docPath = "Quiz$documentNumber"
+
+                Log.d("Document", "document path: $docPath")
+
+                getQuestionAndSelection()
+                setBtnBackgroundColor(blue, blue, blue, blue, blue)
+                showAnswerDialogue(true)
+
+                if (documentNumber >= 25) {
+                    txtResult.text = finalResult.toString()
+                    layoutContent.visibility = View.GONE
+                    layoutResult.visibility = View.VISIBLE
+                    isDone = true
+                }
+
+                alrWrong = false
+            }
+
+            userAnswer.isEmpty() -> {
+                Toast.makeText(activity, "Tolong pilih jawaban terlebih dahulu", Toast.LENGTH_SHORT)
+                    .show()
+            }
+
+            else -> {
+                btnSubmit.visibility = View.GONE
+                trySeeLayout.visibility = View.VISIBLE
+                btnSee.visibility = View.VISIBLE
+                btnTry.visibility = View.VISIBLE
+
+                if (!alrWrong) {
+                    finalResult -= 4
+                    alrWrong = true
+                }
+
+                isWrong()
+                isAnsClickable(false)
+                showAnswerDialogue(false)
+            }
         }
     }
 
     private fun getQuestionAndSelection() {
         Log.d("Quiz", "document path : $docPath")
 
+        when {
+            documentNumber == 15 -> {
+                imgSoal.visibility = View.VISIBLE
+                imgSoal.background = ContextCompat.getDrawable(requireContext(), R.drawable.tabel15)
+            }
+
+            documentNumber == 16 -> {
+                imgSoal.visibility = View.VISIBLE
+                imgSoal.background = ContextCompat.getDrawable(requireContext(), R.drawable.tabel16)
+            }
+
+            documentNumber != 15 || documentNumber != 16 -> {
+                imgSoal.visibility = View.GONE
+            }
+        }
+
+        userAnswer = ""
+
         db.document(docPath)
             .get()
             .addOnSuccessListener { task ->
-                txtSoal.text = task["questionQuiz"].toString()
-                txtJawabA.text = task["selectionA"].toString()
-                txtJawabB.text = task["selectionB"].toString()
-                txtJawabC.text = task["selectionC"].toString()
-                txtJawabD.text = task["selectionD"].toString()
-                txtJawabE.text = task["selectionE"].toString()
+                txtSoal.text = task["questionQuiz"].toString().replace("_n", "\n")
+                txtJawabA.text = task["selectionA"].toString().replace("_n", "\n")
+                txtJawabB.text = task["selectionB"].toString().replace("_n", "\n")
+                txtJawabC.text = task["selectionC"].toString().replace("_n", "\n")
+                txtJawabD.text = task["selectionD"].toString().replace("_n", "\n")
+                txtJawabE.text = task["selectionE"].toString().replace("_n", "\n")
                 realAnswer = task["answer"].toString()
             }
             .addOnFailureListener { exception ->
@@ -267,12 +321,13 @@ class QuizFragmentNav : Fragment() {
         private lateinit var btnJawabD: LinearLayout
         private lateinit var btnJawabE: LinearLayout
         private lateinit var trySeeLayout: LinearLayout
-        private lateinit var layoutContent: ConstraintLayout
+        private lateinit var layoutContent: ScrollView
         private lateinit var layoutStart: ConstraintLayout
         private lateinit var btnSubmit: Button
         private lateinit var btnTry: Button
         private lateinit var btnSee: Button
         private lateinit var txtSoal: TextView
+        private lateinit var imgSoal: ImageView
 
         private lateinit var txtA: TextView
         private lateinit var txtB: TextView
@@ -293,12 +348,18 @@ class QuizFragmentNav : Fragment() {
         private lateinit var txtDialogue: TextView
         private lateinit var imgDialogue: ImageView
 
+        private lateinit var layoutResult: ConstraintLayout
+        private lateinit var txtResult: TextView
+
         private var blue = 1
         private var green = 1
         private var red = 1
         private var documentNumber = 1
         private var docPath = ""
         private var realAnswer = "F"
-        private var userAnswer = "-"
+        private var userAnswer = ""
+        private var finalResult = 100
+        private var isDone = false
+        private var alrWrong = false
     }
 }

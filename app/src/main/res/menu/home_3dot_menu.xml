@@ -7,9 +7,9 @@
         android:title="@string/daftar_pustaka" />
 
     <item
-        android:id="@+id/help"
+        android:id="@+id/kompetensi"
         android:icon="@drawable/ic_baseline_help_24"
-        android:title="@string/bantuan" />
+        android:title="@string/kompetansi" />
 
     <item
         android:id="@+id/logout"

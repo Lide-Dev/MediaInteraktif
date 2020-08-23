@@ -1,12 +1,11 @@
 package com.mediainteraktif.ui.latihan
 
 import android.annotation.SuppressLint
+import android.content.ActivityNotFoundException
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
-import android.os.Environment
-import android.service.autofill.TextValueSanitizer
+import android.os.StrictMode
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -14,16 +13,15 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.core.content.FileProvider
+import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
-import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import com.mediainteraktif.R
-import org.w3c.dom.Text
 import java.io.File
-import java.net.URI
 
 class LatihanFragment : Fragment() {
     private lateinit var mStorage: FirebaseStorage
@@ -72,33 +70,82 @@ class LatihanFragment : Fragment() {
     }
 
     fun onClickListener(type: String) = View.OnClickListener {
-//        when (type) {
-//            "ans" -> {
-//
-//                val pathRef = storageReference.child("Latihan/Answer/LT ${noDocument}.xlsx")
-//                val filePath = File("content:///data/user/0/com.mediainteraktif/cache/LT%2015810054286600217657xlsx")
-//                Log.d("filepath", "$filePath")
-//                val localFile = File.createTempFile("LT $noDocument", ".xlsx", filePath)
-//
-//                val i = Intent(Intent.ACTION_VIEW)
-//                i.setDataAndType(Uri.fromFile(localFile), "application/vnd.ms-excel")
-//                startActivity(i)
-//
-//                pathRef.getFile(localFile)
-//                    .addOnCompleteListener { task ->
-//                        Lo
-//
-//                        val i = Intent(Intent.ACTION_VIEW)
-//                        i.setDataAndType(Uri.fromFile(localFile), "application/vnd.ms-excel")
-//                        startActivity(i)
-//                    }
-//                    .addOnFailureListener { exception ->
-//                        Log.w("Storage", "FAILED TO DOWNLOAD", exception)
-//                    }
-//            }
-//            "add" -> {
-//            }
-//        }
+        val nameFile = namingPrefix(noDocument)
+        when (type) {
+            "ans" -> {
+
+                val pathRef = storageReference.child("Latihan/Answer/LT ${noDocument}.xlsx")
+                val localFile = File.createTempFile("${nameFile}_", ".xls")
+                val filePath = FileProvider.getUriForFile(
+                    requireContext(),
+                    requireContext().applicationContext.packageName + ".provider",
+                    localFile
+                )
+
+                pathRef.getFile(localFile)
+                    .addOnSuccessListener {
+                        Toast.makeText(context, "Opening File", Toast.LENGTH_SHORT).show()
+                        Log.d("Location", "Download Location ${localFile.path}")
+                        val i = Intent(Intent.ACTION_VIEW)
+                        i.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                        i.setDataAndType(filePath, "application/vnd.ms-excel")
+                        try {
+                            startActivity(i)
+                        } catch (e: ActivityNotFoundException) {
+                            Toast.makeText(
+                                activity,
+                                "App not found, please install Spreadsheet first",
+                                Toast.LENGTH_SHORT
+                            )
+                                .show()
+                        }
+                    }
+                    .addOnFailureListener { exception ->
+                        Toast.makeText(activity, "Error : $exception", Toast.LENGTH_SHORT).show()
+                    }
+                localFile.deleteOnExit()
+            }
+            "add" -> {
+                val pathRef = storageReference.child("Latihan/jawab/LT ${noDocument} jawab.xlsx")
+                val localFile = File.createTempFile("${nameFile}_",".xlsx")
+                val filePath = FileProvider.getUriForFile(requireContext(), requireContext().applicationContext.packageName + ".provider", localFile)
+
+                pathRef.getFile(localFile)
+                    .addOnSuccessListener {
+                        Log.d("Location", "Download Location ${localFile.path}")
+                        val i = Intent(Intent.ACTION_VIEW)
+                        i.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                        i.setDataAndType(filePath, "application/vnd.ms-excel")
+                        try {
+                            startActivity(i)
+                        } catch (e: ActivityNotFoundException) {
+                            Toast.makeText(
+                                activity,
+                                "App not found, please install Spreadsheet first",
+                                Toast.LENGTH_SHORT
+                            )
+                                .show()
+                        }
+                    }
+                    .addOnFailureListener { exception ->
+                        Toast.makeText(activity, "Error : $exception", Toast.LENGTH_SHORT).show()
+                    }
+                localFile.deleteOnExit()
+            }
+        }
+    }
+
+    private fun namingPrefix(number: Int): String {
+        var name = ""
+        when (number) {
+            1 -> name = "LHOBI"
+            2 -> name = "BIBI"
+            3 -> name = "BGBI"
+            4 -> name = "BGBNI"
+            5 -> name = "KKB"
+        }
+
+        return name
     }
 
     fun getQuestion() {

@@ -38,7 +38,7 @@ class HomeActivity : AppCompatActivity() {
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
 
-        supportActionBar?.setBackgroundDrawable(ContextCompat.getDrawable(this, R.color.green))
+        supportActionBar?.setBackgroundDrawable(ContextCompat.getDrawable(this, R.color.lightBlue))
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -54,8 +54,8 @@ class HomeActivity : AppCompatActivity() {
                     startActivity(it)
                 }
             }
-            R.id.help -> {
-                intent = Intent(this, HelpActivity::class.java).also {
+            R.id.kompetensi -> {
+                intent = Intent(this, KompetensiActivity::class.java).also {
                     startActivity(it)
                 }
             }

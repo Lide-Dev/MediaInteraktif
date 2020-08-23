@@ -16,6 +16,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:background="@drawable/shape_rounded_bottom"
+            android:backgroundTint="@color/lightBlue"
             android:padding="@dimen/app_dimen_default"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -27,10 +28,10 @@
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
                 android:lines="1"
+                android:text="@string/welcome"
                 android:textColor="@android:color/white"
                 android:textSize="20sp"
                 android:textStyle="bold"
-                android:text="@string/welcome"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="Selamat Datang {Person_FirstName}" />
@@ -64,12 +65,13 @@
             android:id="@+id/home_rv_materi"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/app_dimen_default"
-            android:padding="@dimen/app_dimen_default"
-            tools:listitem='@layout/materi_rv_item'
+            android:layout_marginTop="@dimen/app_dimen_default"
+            android:layout_marginBottom="@dimen/app_dimen_default"
             android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/home_txt_pilihan_materi" />
+            app:layout_constraintTop_toBottomOf="@id/home_txt_pilihan_materi"
+            tools:listitem='@layout/materi_rv_item' />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

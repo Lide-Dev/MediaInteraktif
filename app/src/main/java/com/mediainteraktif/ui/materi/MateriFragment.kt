@@ -1,13 +1,17 @@
 package com.mediainteraktif.ui.materi
 
+import android.content.ActivityNotFoundException
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
-import androidx.fragment.app.*
+import androidx.fragment.app.Fragment
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore
@@ -28,6 +32,7 @@ class MateriFragment : Fragment() {
         tvContent = root.findViewById(R.id.materi_txt_content)
         btnNext = root.findViewById(R.id.materi_btn_next)
         btnPrev = root.findViewById(R.id.materi_btn_prev)
+        btnVideo = root.findViewById(R.id.materi_btn_video)
         materiActivity = MateriActivity()
 
         docNumber = 1
@@ -44,6 +49,11 @@ class MateriFragment : Fragment() {
         collection = "Materi" + noDocument.toString()
         mFirestore = FirebaseFirestore.getInstance()
         db = mFirestore.collection(collection)
+
+        tvSubtitle.visibility = View.INVISIBLE
+        tvContent.visibility = View.INVISIBLE
+        btnVideo.visibility = View.GONE
+        videoId = ""
 
         getDatabaseData(docNumber)
         check(btnNext, btnPrev)
@@ -67,6 +77,17 @@ class MateriFragment : Fragment() {
             check(btnNext, btnPrev)
             getDatabaseData(docNumber)
         }
+
+        btnVideo.setOnClickListener {
+            val iApp = Intent(Intent.ACTION_VIEW, Uri.parse("vnd.youtube:$videoId"))
+            val iWeb =
+                Intent(Intent.ACTION_VIEW, Uri.parse("http://www.youtube.com/watch?v=$videoId"))
+            try {
+                startActivity(iApp)
+            } catch (e: ActivityNotFoundException) {
+                startActivity(iWeb)
+            }
+        }
     }
 
     private fun getDatabaseData(
@@ -78,6 +99,17 @@ class MateriFragment : Fragment() {
                 tvContent.text = task.documents[0]["contentMateri"].toString()
                     .replace("_n", "\n")
                 tvSubtitle.text = task.documents[0]["subtitleMateri"].toString()
+                videoId = task.documents[0]["videoUrl"].toString()
+
+                if (videoId != "null") {
+                    btnVideo.visibility = View.VISIBLE
+                } else if (videoId == "null") {
+                    btnVideo.visibility = View.GONE
+                }
+            }
+            .addOnCompleteListener {
+                tvSubtitle.visibility = View.VISIBLE
+                tvContent.visibility = View.VISIBLE
             }
             .addOnFailureListener { exception ->
                 Toast.makeText(activity, "ERROR NO DOCUMENT! $exception", Toast.LENGTH_SHORT)
@@ -125,10 +157,12 @@ class MateriFragment : Fragment() {
         private lateinit var mFirestore: FirebaseFirestore
         private lateinit var materiActivity: MateriActivity
         private lateinit var db: CollectionReference
+        private lateinit var btnVideo: Button
 
         private var docNumber = 1
         private var noDocument: Int? = 0
         private var collection = ""
         private var maxNo: Long? = 0
+        private var videoId = ""
     }
 }

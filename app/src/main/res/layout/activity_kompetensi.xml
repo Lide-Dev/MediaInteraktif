@@ -68,7 +68,8 @@
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintEnd_toEndOf="parent"
       android:orientation="horizontal"
-      android:gravity="center">
+      android:gravity="center"
+      android:visibility="gone">
 
     <TextView
         android:layout_width="wrap_content"

@@ -6,6 +6,6 @@ import androidx.appcompat.app.AppCompatActivity
 class PustakaActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.acttivity_pustaka)
+        setContentView(R.layout.activity_pustaka)
     }
 }

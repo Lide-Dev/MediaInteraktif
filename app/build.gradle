@@ -17,7 +17,7 @@ android {
 
     defaultConfig {
         applicationId "com.mediainteraktif"
-        minSdkVersion 21
+        minSdkVersion 24
         targetSdkVersion 30
         versionCode 1
         versionName kotlin_version

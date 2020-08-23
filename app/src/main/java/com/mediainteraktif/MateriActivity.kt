@@ -1,5 +1,6 @@
 package com.mediainteraktif
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
@@ -36,10 +37,18 @@ class MateriActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-//        when(item.itemId) {
-//            R.id.daftar_pustaka -> null
-//            R.id.help -> null
-//        }
+        when (item.itemId) {
+            R.id.daftar_pustaka -> {
+                intent = Intent(this, PustakaActivity::class.java).also {
+                    startActivity(it)
+                }
+            }
+            R.id.kompetensi -> {
+                intent = Intent(this, KompetensiActivity::class.java).also {
+                    startActivity(it)
+                }
+            }
+        }
 
         return super.onOptionsItemSelected(item)
     }
