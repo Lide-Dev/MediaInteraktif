@@ -1,5 +1,6 @@
 package com.mediainteraktif.ui.materi
 
+import android.annotation.SuppressLint
 import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.net.Uri
@@ -11,12 +12,16 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
+import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageReference
 import com.mediainteraktif.MateriActivity
 import com.mediainteraktif.R
+import java.io.File
 
 class MateriFragment : Fragment() {
 
@@ -39,6 +44,7 @@ class MateriFragment : Fragment() {
 
         btnNext.visibility = View.GONE
         btnPrev.visibility = View.GONE
+        mStorageRef = FirebaseStorage.getInstance().reference
 
         noDocument = activity?.intent?.getIntExtra(IDDOCUMENT, 0)
         maxNo = activity?.intent?.getLongExtra(SIZEDOCUMENT, 0L)
@@ -79,17 +85,55 @@ class MateriFragment : Fragment() {
         }
 
         btnVideo.setOnClickListener {
-            val iApp = Intent(Intent.ACTION_VIEW, Uri.parse("vnd.youtube:$videoId"))
-            val iWeb =
-                Intent(Intent.ACTION_VIEW, Uri.parse("http://www.youtube.com/watch?v=$videoId"))
-            try {
-                startActivity(iApp)
-            } catch (e: ActivityNotFoundException) {
-                startActivity(iWeb)
+            if (videoId == "pdf") {
+                getStorageFile()
+            } else {
+                openYoutube()
             }
+
         }
     }
 
+    fun openYoutube() {
+        val iApp = Intent(Intent.ACTION_VIEW, Uri.parse("vnd.youtube:$videoId"))
+        val iWeb =
+            Intent(Intent.ACTION_VIEW, Uri.parse("http://www.youtube.com/watch?v=$videoId"))
+        try {
+            startActivity(iApp)
+        } catch (e: ActivityNotFoundException) {
+            startActivity(iWeb)
+        }
+    }
+
+    fun getStorageFile() {
+        val localFile = File.createTempFile("KODE_KLASIFIKASI", ".pdf")
+        val localStorage = mStorageRef
+            .child("/KodeKlasifikasi/KODE KLASIFIKASI BARANG.pdf")
+        val filePath = FileProvider.getUriForFile(
+            requireContext(), requireContext().applicationContext.packageName + ".provider",
+            localFile
+        )
+
+        localStorage.getFile(localFile)
+            .addOnSuccessListener {
+                Toast.makeText(context, "Opening File", Toast.LENGTH_SHORT).show()
+                val i = Intent(Intent.ACTION_VIEW)
+                i.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                i.setDataAndType(filePath, "application/pdf")
+                try {
+                    startActivity(i)
+                } catch (e: ActivityNotFoundException) {
+                    Toast.makeText(
+                        activity,
+                        "App not found, please install Spreadsheet first",
+                        Toast.LENGTH_SHORT
+                    )
+                        .show()
+                }
+            }
+    }
+
+    @SuppressLint("SetTextI18n")
     private fun getDatabaseData(
         docNumber: Int
     ) {
@@ -101,11 +145,22 @@ class MateriFragment : Fragment() {
                 tvSubtitle.text = task.documents[0]["subtitleMateri"].toString()
                 videoId = task.documents[0]["videoUrl"].toString()
 
-                if (videoId != "null") {
-                    btnVideo.visibility = View.VISIBLE
-                } else if (videoId == "null") {
-                    btnVideo.visibility = View.GONE
+                when {
+                    videoId == "pdf" -> {
+                        btnVideo.text = "Buka File"
+                        btnVideo.visibility = View.VISIBLE
+                    }
+
+                    videoId != "null" -> {
+                        btnVideo.text = "Buka Video"
+                        btnVideo.visibility = View.VISIBLE
+                    }
+
+                    videoId == "null" -> {
+                        btnVideo.visibility = View.GONE
+                    }
                 }
+
             }
             .addOnCompleteListener {
                 tvSubtitle.visibility = View.VISIBLE
@@ -156,6 +211,7 @@ class MateriFragment : Fragment() {
         private lateinit var btnPrev: FloatingActionButton
         private lateinit var mFirestore: FirebaseFirestore
         private lateinit var materiActivity: MateriActivity
+        private lateinit var mStorageRef: StorageReference
         private lateinit var db: CollectionReference
         private lateinit var btnVideo: Button
 

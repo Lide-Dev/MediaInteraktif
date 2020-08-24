@@ -3,9 +3,7 @@ package com.mediainteraktif.ui.latihan
 import android.annotation.SuppressLint
 import android.content.ActivityNotFoundException
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
-import android.os.StrictMode
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -14,7 +12,6 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.FileProvider
-import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
@@ -107,12 +104,17 @@ class LatihanFragment : Fragment() {
             }
             "add" -> {
                 val pathRef = storageReference.child("Latihan/jawab/LT ${noDocument} jawab.xlsx")
-                val localFile = File.createTempFile("${nameFile}_",".xlsx")
-                val filePath = FileProvider.getUriForFile(requireContext(), requireContext().applicationContext.packageName + ".provider", localFile)
+                val localFile = File.createTempFile("${nameFile}_", ".xlsx")
+                val filePath = FileProvider.getUriForFile(
+                    requireContext(),
+                    requireContext().applicationContext.packageName + ".provider",
+                    localFile
+                )
 
                 pathRef.getFile(localFile)
                     .addOnSuccessListener {
                         Log.d("Location", "Download Location ${localFile.path}")
+                        Toast.makeText(context, "Opening File", Toast.LENGTH_SHORT).show()
                         val i = Intent(Intent.ACTION_VIEW)
                         i.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
                         i.setDataAndType(filePath, "application/vnd.ms-excel")

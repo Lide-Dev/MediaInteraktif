@@ -52,4 +52,8 @@
     <string name="nilai_anda">Nilai Anda</string>
     <string name="kompetansi">Kompetansi</string>
     <string name="video">Buka Video</string>
+    <string name="restart_quiz">Ulangi</string>
+    <string name="help">Bantuan</string>
+    <string name="nim">NIM:</string>
+    <string name="nimNum">16802241012</string>
 </resources>

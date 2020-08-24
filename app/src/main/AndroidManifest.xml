@@ -30,6 +30,7 @@
         <activity android:name=".KompetensiActivity" />
         <activity android:name=".LatihanActivity" />
         <activity android:name=".PustakaActivity" />
+        <activity android:name=".HelpActivity" />
         
         <provider
             android:authorities="${applicationId}.provider"

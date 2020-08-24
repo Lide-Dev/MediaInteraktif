@@ -76,6 +76,7 @@ class QuizFragmentNav : Fragment() {
 
         layoutResult = view.findViewById(R.id.quiz_layout_result)
         txtResult = view.findViewById(R.id.quiz_txt_result)
+        btnReset = view.findViewById(R.id.quiz_btn_reset)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -95,6 +96,19 @@ class QuizFragmentNav : Fragment() {
         btnSee.setOnClickListener(onClickHints())
         btnStart.setOnClickListener(onClickStart())
         layoutDialogue.setOnClickListener(onClickCloseDialogue())
+        btnReset.setOnClickListener(onClickReset())
+    }
+
+    private fun onClickReset() = View.OnClickListener {
+        documentNumber = 1
+        docPath = "Quiz$documentNumber"
+
+        getQuestionAndSelection()
+        setBtnBackgroundColor(blue, blue, blue, blue, blue)
+        layoutResult.visibility = View.GONE
+        layoutStart.visibility = View.VISIBLE
+
+        isDone = false
     }
 
     private fun onClickCloseDialogue() = View.OnClickListener {
@@ -102,7 +116,7 @@ class QuizFragmentNav : Fragment() {
     }
 
     private fun onClickStart() = View.OnClickListener {
-        if(isDone) {
+        if (isDone) {
             txtResult.text = finalResult.toString()
             Toast.makeText(activity, "anda sudah selesai mengerjakan quiz", Toast.LENGTH_SHORT)
                 .show()
@@ -233,8 +247,6 @@ class QuizFragmentNav : Fragment() {
     }
 
     private fun getQuestionAndSelection() {
-        Log.d("Quiz", "document path : $docPath")
-
         when {
             documentNumber == 15 -> {
                 imgSoal.visibility = View.VISIBLE
@@ -328,6 +340,7 @@ class QuizFragmentNav : Fragment() {
         private lateinit var btnSee: Button
         private lateinit var txtSoal: TextView
         private lateinit var imgSoal: ImageView
+        private lateinit var btnReset: Button
 
         private lateinit var txtA: TextView
         private lateinit var txtB: TextView

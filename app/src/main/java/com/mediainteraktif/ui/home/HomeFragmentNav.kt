@@ -7,10 +7,8 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
@@ -87,8 +85,7 @@ class HomeFragmentNav : Fragment(), HomeAdapter.OnItemClickListener {
             .build()
 
         rvMateri.layoutManager =
-//            LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
-            GridLayoutManager(activity, 2)
+            LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
 
         homeAdapter = HomeAdapter(options)
         homeAdapter.setOnItemClickListener(this)

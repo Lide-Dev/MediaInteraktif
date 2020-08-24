@@ -1,6 +1,5 @@
 package com.mediainteraktif.adapter
 
-import android.text.Layout
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,7 +11,6 @@ import com.google.firebase.firestore.DocumentSnapshot
 import com.mediainteraktif.R
 import com.mediainteraktif.adapter.HomeAdapter.HomeViewHolder
 import com.mediainteraktif.model.HomeModel
-import com.mediainteraktif.model.LatihanModel
 
 class HomeAdapter internal constructor(options: FirestoreRecyclerOptions<HomeModel>) :
     FirestoreRecyclerAdapter<HomeModel, HomeViewHolder>(options) {
