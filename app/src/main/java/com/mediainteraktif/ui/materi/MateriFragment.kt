@@ -10,10 +10,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
+import com.bumptech.glide.Glide
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore
@@ -38,6 +40,7 @@ class MateriFragment : Fragment() {
         btnNext = root.findViewById(R.id.materi_btn_next)
         btnPrev = root.findViewById(R.id.materi_btn_prev)
         btnVideo = root.findViewById(R.id.materi_btn_video)
+        imgMateri = root.findViewById(R.id.materi_img_content)
         materiActivity = MateriActivity()
 
         docNumber = 1
@@ -59,6 +62,7 @@ class MateriFragment : Fragment() {
         tvSubtitle.visibility = View.INVISIBLE
         tvContent.visibility = View.INVISIBLE
         btnVideo.visibility = View.GONE
+        imgMateri.visibility = View.GONE
         videoId = ""
 
         getDatabaseData(docNumber)
@@ -133,6 +137,16 @@ class MateriFragment : Fragment() {
             }
     }
 
+    private fun getMateriImg(noDoc: Int): Int {
+        return when (noDoc) {
+            3 -> R.drawable.materi3
+            4 -> R.drawable.materi4
+            5 -> R.drawable.materi5
+            6 -> R.drawable.materi6
+            else -> 0
+        }
+    }
+
     @SuppressLint("SetTextI18n")
     private fun getDatabaseData(
         docNumber: Int
@@ -144,6 +158,7 @@ class MateriFragment : Fragment() {
                     .replace("_n", "\n")
                 tvSubtitle.text = task.documents[0]["subtitleMateri"].toString()
                 videoId = task.documents[0]["videoUrl"].toString()
+                materiImg = task.documents[0]["imageUrl"].toString()
 
                 when {
                     videoId == "pdf" -> {
@@ -159,6 +174,16 @@ class MateriFragment : Fragment() {
                     videoId == "null" -> {
                         btnVideo.visibility = View.GONE
                     }
+                }
+
+                if (materiImg == "yes") {
+                    imgMateri.visibility = View.VISIBLE
+
+                    Glide.with(requireContext())
+                        .load(getMateriImg(noDocument!!))
+                        .into(imgMateri)
+                } else {
+                    imgMateri.visibility = View.GONE
                 }
 
             }
@@ -214,11 +239,13 @@ class MateriFragment : Fragment() {
         private lateinit var mStorageRef: StorageReference
         private lateinit var db: CollectionReference
         private lateinit var btnVideo: Button
+        private lateinit var imgMateri: ImageView
 
         private var docNumber = 1
         private var noDocument: Int? = 0
         private var collection = ""
         private var maxNo: Long? = 0
         private var videoId = ""
+        private var materiImg = ""
     }
 }

@@ -10,6 +10,7 @@ import android.widget.*
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import com.bumptech.glide.Glide
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore
 import com.mediainteraktif.R
@@ -250,12 +251,16 @@ class QuizFragmentNav : Fragment() {
         when {
             documentNumber == 15 -> {
                 imgSoal.visibility = View.VISIBLE
-                imgSoal.background = ContextCompat.getDrawable(requireContext(), R.drawable.tabel15)
+                Glide.with(requireContext())
+                    .load(R.drawable.tabel15)
+                    .into(imgSoal)
             }
 
             documentNumber == 16 -> {
                 imgSoal.visibility = View.VISIBLE
-                imgSoal.background = ContextCompat.getDrawable(requireContext(), R.drawable.tabel16)
+                Glide.with(requireContext())
+                    .load(R.drawable.tabel16)
+                    .into(imgSoal)
             }
 
             documentNumber != 15 || documentNumber != 16 -> {
@@ -264,6 +269,7 @@ class QuizFragmentNav : Fragment() {
         }
 
         userAnswer = ""
+        layoutContent.visibility = View.GONE
 
         db.document(docPath)
             .get()
@@ -275,6 +281,9 @@ class QuizFragmentNav : Fragment() {
                 txtJawabD.text = task["selectionD"].toString().replace("_n", "\n")
                 txtJawabE.text = task["selectionE"].toString().replace("_n", "\n")
                 realAnswer = task["answer"].toString()
+            }
+            .addOnCompleteListener {
+                layoutContent.visibility = View.VISIBLE
             }
             .addOnFailureListener { exception ->
                 Log.w("exception", "ERROR GETTING DOCUMENT: $exception", exception)
