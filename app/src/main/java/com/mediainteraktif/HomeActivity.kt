@@ -50,19 +50,16 @@ class HomeActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.daftar_pustaka -> {
-                intent = Intent(this, PustakaActivity::class.java).also {
-                    startActivity(it)
-                }
+                intent = Intent(this, PustakaActivity::class.java)
+                startActivity(intent)
             }
             R.id.kompetensi -> {
-                intent = Intent(this, KompetensiActivity::class.java).also {
-                    startActivity(it)
-                }
+                intent = Intent(this, KompetensiActivity::class.java)
+                startActivity(intent)
             }
             R.id.help -> {
-                intent = Intent(this, HelpActivity::class.java).also {
-                    startActivity(it)
-                }
+                intent = Intent(this, HelpActivity::class.java)
+                startActivity(intent)
             }
             R.id.logout -> signingOut()
         }
