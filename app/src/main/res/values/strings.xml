@@ -12,14 +12,12 @@
     <string name="atau_masuk_dengan">Atau Masuk dengan</string>
     <string name="sudah_punya_akun">Sudah punya akun? </string>
     <string name="belum_punya_akun">Belum punya akun? </string>
-    <string name="kompetensi_txt_1">STANDAR KOMPETENSI:</string>
-    <string name="kompetensi_txt_2">Memahamai Inventarisari Sarana dan Prasarana.</string>
-    <string name="kompetensi_txt_3">KOMPETENSI DASAR:</string>
-    <string name="kompetensi_txt_4">Melakukan kegiatan Inventarisasi Sarana Dan Prasarana.</string>
-    <string name="kompetensi_txt_5">TUJUAN PEMBELAJARAN:</string>
-    <string name="kompetensi_txt_6">Siswa dapat mengisi Buku Induk Lembar Hasil Obname Barang
-        Inventaris, Buku induk barang Inventaris, Buku Golongan Barang Inventaris, Buku Golongan
-        Barang Non Inventaris serta dapat memberikan Kode Barang.</string>
+    <string name="kompetensi_txt_1">KOMPETENSI DASAR :</string>
+    <string name="kompetensi_txt_2">3.13.Melakukan inventarisasi sarana dan prasarana\n4.13.Melakukan kegiatan inventarisasi sarana dan prasarana</string>
+    <string name="kompetensi_txt_3">INDIKATOR PENCAPAIAN KOMPETENSI :</string>
+    <string name="kompetensi_txt_4">1.	Menjelaskan definisi  Inventarisasi sarana dan prasarana\n2.	Melakukan Inventarisasi sarana dan prasarana\n3.	Menganalisis Inventarisasi sarana dan prasarana\n4.	melakukan administrasi inventarisasi sarana dan prasarana</string>
+    <string name="kompetensi_txt_5">TUJUAN PEMBELAJARAN :</string>
+    <string name="kompetensi_txt_6">1.	Peserta didik dapat menjelaskan definisi inventarisasi sarana dan prasarana\n2.	Peserta didik dapat melakukan Inventarisasi sarana dan prasarana\n3.	Peserta didik dapat menganalisis Inventarisasi sarana dan prasarana\n4.	Peserta didik dapat melakukan administrasi inventarisasi</string>
     <string name="home">Home</string>
     <string name="materi">Materi</string>
     <string name="profile">Profile</string>

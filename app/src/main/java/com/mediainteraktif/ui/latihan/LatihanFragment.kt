@@ -3,6 +3,7 @@ package com.mediainteraktif.ui.latihan
 import android.annotation.SuppressLint
 import android.content.ActivityNotFoundException
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -11,6 +12,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
 import com.google.firebase.firestore.DocumentReference
@@ -62,11 +64,17 @@ class LatihanFragment : Fragment() {
         tvTitle.text = "Latihan Soal $noDocument"
         getQuestion()
 
-        imgAdd.setOnClickListener(onClickListener("add"))
-        imgAnswer.setOnClickListener(onClickListener("ans"))
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            imgAdd.setOnClickListener(onBtnClickListener("add"))
+            imgAnswer.setOnClickListener(onBtnClickListener("ans"))
+        } else {
+            imgAdd.visibility = View.GONE
+            imgAnswer.visibility = View.GONE
+        }
     }
 
-    fun onClickListener(type: String) = View.OnClickListener {
+    @RequiresApi(api = 24)
+    fun onBtnClickListener(type: String) = View.OnClickListener {
         val nameFile = namingPrefix(noDocument)
         when (type) {
             "ans" -> {

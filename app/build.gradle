@@ -6,10 +6,16 @@ apply plugin: 'com.google.gms.google-services'
 android {
     signingConfigs {
         config {
-            storeFile file('C:\\Users\\DESKTOP-PC\\.android\\debugKey.keystore')
+            storeFile file('C:\\Users\\DESKTOP-PC\\Documents\\Kerjaan\\MediaInteraktif\\keyStoreRelease.jks')
             storePassword 'X45g7jKl8'
-            keyAlias 'debugKey'
+            keyAlias 'keyrelease'
             keyPassword 'X45g7jKl8'
+        }
+        config2 {
+            storeFile file('C:\\Users\\DESKTOP-PC\\.android\\keys.jks')
+            storePassword 'Password'
+            keyAlias 'keys'
+            keyPassword 'Password'
         }
     }
     compileSdkVersion 30
@@ -17,7 +23,7 @@ android {
 
     defaultConfig {
         applicationId "com.mediainteraktif"
-        minSdkVersion 24
+        minSdkVersion 21
         targetSdkVersion 30
         versionCode 1
         versionName kotlin_version
