@@ -22,10 +22,11 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toTopOf="@id/splash_btn_start">
 
-        <de.hdodenhof.circleimageview.CircleImageView
+        <ImageView
+            android:id="@+id/splash_img_logo"
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:src="@drawable/ic_app"/>
+            android:src="@drawable/ic_app" />
 
         <TextView
             android:layout_width="wrap_content"

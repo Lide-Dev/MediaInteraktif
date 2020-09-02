@@ -54,4 +54,8 @@
     <string name="help">Bantuan</string>
     <string name="nim">NIM:</string>
     <string name="nimNum">16802241012</string>
+    <string name="ahli_materi">Ahli Materi:</string>
+    <string name="ibu_rumiyati_s_e">Rumiyati, S.E</string>
+    <string name="ahli_media">Ahli Media:</string>
+    <string name="dr_sutirman">Dr. Sutirman</string>
 </resources>

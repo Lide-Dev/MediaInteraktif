@@ -12,7 +12,6 @@ class SplashActivity : AppCompatActivity() {
     private var mAuth = FirebaseAuth.getInstance()
     private var mUser = mAuth.currentUser
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)

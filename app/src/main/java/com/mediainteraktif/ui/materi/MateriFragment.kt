@@ -5,7 +5,6 @@ import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -52,9 +51,6 @@ class MateriFragment : Fragment() {
         noDocument = activity?.intent?.getIntExtra(IDDOCUMENT, 0)
         maxNo = activity?.intent?.getLongExtra(SIZEDOCUMENT, 0L)
 
-        Log.d("DOCUMENT", "noDocument get from Intent : $noDocument")
-        Log.d("DOCUMENT", "maxNo get from Intent : $maxNo")
-
         collection = "Materi" + noDocument.toString()
         mFirestore = FirebaseFirestore.getInstance()
         db = mFirestore.collection(collection)
@@ -67,8 +63,6 @@ class MateriFragment : Fragment() {
 
         getDatabaseData(docNumber)
         check(btnNext, btnPrev)
-
-        Log.d("MateriFragment", "------------- END MateriFragment -------------")
 
         return root
     }
@@ -90,7 +84,7 @@ class MateriFragment : Fragment() {
 
         btnVideo.setOnClickListener {
             if (videoId == "pdf") {
-                getStorageFile()
+                getPdfFile()
             } else {
                 openYoutube()
             }
@@ -109,30 +103,34 @@ class MateriFragment : Fragment() {
         }
     }
 
-    fun getStorageFile() {
+    fun getPdfFile() {
         val localFile = File.createTempFile("KODE_KLASIFIKASI", ".pdf")
         val localStorage = mStorageRef
             .child("/KodeKlasifikasi/KODE KLASIFIKASI BARANG.pdf")
         val filePath = FileProvider.getUriForFile(
-            requireContext(), requireContext().applicationContext.packageName + ".provider",
+            requireContext(),
+            requireContext().applicationContext.packageName + ".provider",
             localFile
         )
 
         localStorage.getFile(localFile)
             .addOnSuccessListener {
                 Toast.makeText(context, "Opening File", Toast.LENGTH_SHORT).show()
-                val i = Intent(Intent.ACTION_VIEW)
-                i.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-                i.setDataAndType(filePath, "application/pdf")
-                try {
-                    startActivity(i)
-                } catch (e: ActivityNotFoundException) {
-                    Toast.makeText(
-                        activity,
-                        "App not found, please install Spreadsheet first",
-                        Toast.LENGTH_SHORT
+                val iApp = Intent(Intent.ACTION_VIEW)
+                iApp.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                iApp.setDataAndType(filePath, "application/pdf")
+
+                val iWeb = Intent(
+                    Intent.ACTION_VIEW,
+                    Uri.parse(
+                        "https://drive.google.com/file/d/" +
+                                "1iB4rhLgHJ3NJoE1eWOgPOwNNJtuBhWQT/view?usp=sharing"
                     )
-                        .show()
+                )
+                try {
+                    startActivity(iApp)
+                } catch (e: ActivityNotFoundException) {
+                    startActivity(iWeb)
                 }
             }
     }

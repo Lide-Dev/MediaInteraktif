@@ -3,7 +3,7 @@ package com.mediainteraktif.ui.latihan
 import android.annotation.SuppressLint
 import android.content.ActivityNotFoundException
 import android.content.Intent
-import android.os.Build
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -12,7 +12,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
-import androidx.annotation.RequiresApi
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
 import com.google.firebase.firestore.DocumentReference
@@ -32,6 +32,7 @@ class LatihanFragment : Fragment() {
     private lateinit var tvContent: TextView
     private lateinit var imgAnswer: ImageView
     private lateinit var imgAdd: ImageView
+    private lateinit var layoutBtn: ConstraintLayout
 
     private var noDocument: Int = 0
 
@@ -54,6 +55,7 @@ class LatihanFragment : Fragment() {
         tvContent = root.findViewById(R.id.latihan_txt_content)
         imgAdd = root.findViewById(R.id.latihan_add_xlx)
         imgAnswer = root.findViewById(R.id.latihan_answer_xlx)
+        layoutBtn = root.findViewById(R.id.latihan_layout_xlx)
 
         return root
     }
@@ -64,21 +66,23 @@ class LatihanFragment : Fragment() {
         tvTitle.text = "Latihan Soal $noDocument"
         getQuestion()
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            imgAdd.setOnClickListener(onBtnClickListener("add"))
-            imgAnswer.setOnClickListener(onBtnClickListener("ans"))
-        } else {
-            imgAdd.visibility = View.GONE
-            imgAnswer.visibility = View.GONE
-        }
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+//            imgAdd.setOnClickListener(onBtnClickListener("add"))
+//            imgAnswer.setOnClickListener(onBtnClickListener("ans"))
+//        } else {
+//            imgAdd.visibility = View.GONE
+//            imgAnswer.visibility = View.GONE
+//        }
+
+        imgAdd.setOnClickListener(onBtnClickListener("add"))
+        imgAnswer.setOnClickListener(onBtnClickListener("ans"))
     }
 
-    @RequiresApi(api = 24)
+    //    @RequiresApi(api = 24)
     fun onBtnClickListener(type: String) = View.OnClickListener {
         val nameFile = namingPrefix(noDocument)
         when (type) {
             "ans" -> {
-
                 val pathRef = storageReference.child("Latihan/Answer/LT ${noDocument}.xlsx")
                 val localFile = File.createTempFile("${nameFile}_", ".xls")
                 val filePath = FileProvider.getUriForFile(
@@ -94,15 +98,16 @@ class LatihanFragment : Fragment() {
                         val i = Intent(Intent.ACTION_VIEW)
                         i.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
                         i.setDataAndType(filePath, "application/vnd.ms-excel")
+
+                        val iWeb = Intent(
+                            Intent.ACTION_VIEW,
+                            Uri.parse("http://bit.ly/LatihanJwb$noDocument")
+                        )
+
                         try {
                             startActivity(i)
                         } catch (e: ActivityNotFoundException) {
-                            Toast.makeText(
-                                activity,
-                                "App not found, please install Spreadsheet first",
-                                Toast.LENGTH_SHORT
-                            )
-                                .show()
+                            startActivity(iWeb)
                         }
                     }
                     .addOnFailureListener { exception ->
@@ -126,15 +131,15 @@ class LatihanFragment : Fragment() {
                         val i = Intent(Intent.ACTION_VIEW)
                         i.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
                         i.setDataAndType(filePath, "application/vnd.ms-excel")
+
+                        val iWeb = Intent(
+                            Intent.ACTION_VIEW,
+                            Uri.parse("http://bit.ly/LatihanAns$noDocument")
+                        )
                         try {
                             startActivity(i)
                         } catch (e: ActivityNotFoundException) {
-                            Toast.makeText(
-                                activity,
-                                "App not found, please install Spreadsheet first",
-                                Toast.LENGTH_SHORT
-                            )
-                                .show()
+                            startActivity(iWeb)
                         }
                     }
                     .addOnFailureListener { exception ->

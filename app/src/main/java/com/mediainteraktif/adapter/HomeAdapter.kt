@@ -22,8 +22,7 @@ class HomeAdapter internal constructor(options: FirestoreRecyclerOptions<HomeMod
             R.layout.materi_rv_item,
             parent, false
         )
-        val mHolder = HomeViewHolder(view)
-        return mHolder
+        return HomeViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: HomeViewHolder, position: Int, model: HomeModel) {
