@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -8,60 +7,52 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/app_dimen_default"
+        android:visibility="visible"
         android:orientation="vertical">
 
         <ImageView
             android:id="@+id/help_img_1"
             android:layout_width="match_parent"
-            android:layout_height="400dp"
-            tools:srcCompat="@drawable/group_1" />
+            android:layout_height="400dp" />
 
         <ImageView
             android:id="@+id/help_img_2"
             android:layout_width="match_parent"
-            android:layout_height="400dp"
-            tools:srcCompat="@drawable/group_2" />
+            android:layout_height="400dp" />
 
         <ImageView
             android:id="@+id/help_img_3"
             android:layout_width="match_parent"
-            android:layout_height="400dp"
-            tools:srcCompat="@drawable/group_3" />
+            android:layout_height="400dp" />
 
         <ImageView
             android:id="@+id/help_img_4"
             android:layout_width="match_parent"
-            android:layout_height="400dp"
-            tools:srcCompat="@drawable/group_4" />
+            android:layout_height="400dp" />
 
         <ImageView
             android:id="@+id/help_img_5"
             android:layout_width="match_parent"
-            android:layout_height="400dp"
-            tools:srcCompat="@drawable/group_5" />
+            android:layout_height="400dp" />
 
         <ImageView
             android:id="@+id/help_img_6"
             android:layout_width="match_parent"
-            android:layout_height="400dp"
-            tools:srcCompat="@drawable/group_6" />
+            android:layout_height="400dp" />
 
         <ImageView
             android:id="@+id/help_img_7"
             android:layout_width="match_parent"
-            android:layout_height="400dp"
-            tools:srcCompat="@drawable/group_7" />
+            android:layout_height="400dp" />
 
         <ImageView
             android:id="@+id/help_img_8"
             android:layout_width="match_parent"
-            android:layout_height="400dp"
-            tools:srcCompat="@drawable/group_8" />
+            android:layout_height="400dp" />
 
         <ImageView
             android:id="@+id/help_img_9"
             android:layout_width="match_parent"
-            android:layout_height="400dp"
-            tools:srcCompat="@drawable/group_9" />
+            android:layout_height="400dp" />
     </LinearLayout>
 </ScrollView>
