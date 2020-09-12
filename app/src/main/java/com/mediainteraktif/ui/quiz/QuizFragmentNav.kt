@@ -96,7 +96,7 @@ class QuizFragmentNav : Fragment() {
         btnTry.setOnClickListener(onClickTryAgain())
         btnSee.setOnClickListener(onClickHints())
         btnStart.setOnClickListener(onClickStart())
-        layoutDialogue.setOnClickListener(onClickCloseDialogue())
+        layoutDialogue.setOnClickListener(onClickDialogue())
         btnReset.setOnClickListener(onClickReset())
     }
 
@@ -112,7 +112,7 @@ class QuizFragmentNav : Fragment() {
         isDone = false
     }
 
-    private fun onClickCloseDialogue() = View.OnClickListener {
+    private fun onClickDialogue() = View.OnClickListener {
         layoutDialogue.visibility = View.GONE
     }
 
