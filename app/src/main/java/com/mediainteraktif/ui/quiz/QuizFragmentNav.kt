@@ -1,6 +1,7 @@
 package com.mediainteraktif.ui.quiz
 
 import android.annotation.SuppressLint
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -38,7 +39,34 @@ class QuizFragmentNav : Fragment() {
         blue = ContextCompat.getColor(requireContext(), R.color.blue)
         red = ContextCompat.getColor(requireContext(), R.color.red)
 
+        if (Build.VERSION.SDK_INT < 24) {
+            initLow()
+        }
+
         return root
+    }
+
+    private fun initLow() {
+        btnJawabA.background = ContextCompat.getDrawable(
+            requireContext(),
+            R.drawable.shape_rounded_10dp_little_blue_corner
+        )
+        btnJawabB.background = ContextCompat.getDrawable(
+            requireContext(),
+            R.drawable.shape_rounded_10dp_little_blue_corner
+        )
+        btnJawabC.background = ContextCompat.getDrawable(
+            requireContext(),
+            R.drawable.shape_rounded_10dp_little_blue_corner
+        )
+        btnJawabD.background = ContextCompat.getDrawable(
+            requireContext(),
+            R.drawable.shape_rounded_10dp_little_blue_corner
+        )
+        btnJawabE.background = ContextCompat.getDrawable(
+            requireContext(),
+            R.drawable.shape_rounded_10dp_little_blue_corner
+        )
     }
 
     private fun initializing(view: View) {
@@ -104,7 +132,6 @@ class QuizFragmentNav : Fragment() {
         documentNumber = 1
         docPath = "Quiz$documentNumber"
 
-        getQuestionAndSelection()
         setBtnBackgroundColor(blue, blue, blue, blue, blue)
         layoutResult.visibility = View.GONE
         layoutStart.visibility = View.VISIBLE
@@ -205,23 +232,22 @@ class QuizFragmentNav : Fragment() {
     private fun onClickBtnSubmit() = View.OnClickListener {
         when {
             userAnswer == realAnswer -> {
-                documentNumber += 1
-                docPath = "Quiz$documentNumber"
-
-                Log.d("Document", "document path: $docPath")
-
-                getQuestionAndSelection()
-                setBtnBackgroundColor(blue, blue, blue, blue, blue)
-                showAnswerDialogue(true)
-
                 if (documentNumber >= 25) {
-                    txtResult.text = finalResult.toString()
                     layoutContent.visibility = View.GONE
+                    txtResult.text = finalResult.toString()
                     layoutResult.visibility = View.VISIBLE
                     isDone = true
-                }
+                } else {
 
-                alrWrong = false
+                    documentNumber += 1
+                    docPath = "Quiz$documentNumber"
+
+                    getQuestionAndSelection()
+                    setBtnBackgroundColor(blue, blue, blue, blue, blue)
+                    showAnswerDialogue(true)
+
+                    alrWrong = false
+                }
             }
 
             userAnswer.isEmpty() -> {
@@ -299,23 +325,124 @@ class QuizFragmentNav : Fragment() {
     }
 
     private fun setBtnBackgroundColor(a: Int, b: Int, c: Int, d: Int, e: Int) {
-        btnJawabA.background.setTint(a)
-        txtA.background.setTint(a)
-        btnJawabB.background.setTint(b)
-        txtB.background.setTint(b)
-        btnJawabC.background.setTint(c)
-        txtC.background.setTint(c)
-        btnJawabD.background.setTint(d)
-        txtD.background.setTint(d)
-        btnJawabE.background.setTint(e)
-        txtE.background.setTint(e)
+        if (Build.VERSION.SDK_INT >= 24) {
+            btnJawabA.background.setTint(a)
+            txtA.background.setTint(a)
+            btnJawabB.background.setTint(b)
+            txtB.background.setTint(b)
+            btnJawabC.background.setTint(c)
+            txtC.background.setTint(c)
+            btnJawabD.background.setTint(d)
+            txtD.background.setTint(d)
+            btnJawabE.background.setTint(e)
+            txtE.background.setTint(e)
+        } else {
+            setDrawableQuizSelection(a, b, c, d, e)
+        }
+    }
+
+    private fun setDrawableQuizSelection(a: Int, b: Int, c: Int, d: Int, e: Int) {
+        val greenRounded =
+            ContextCompat.getDrawable(requireContext(), R.drawable.shape_rounded_10dp_green_corner)
+        val blueRounded = ContextCompat.getDrawable(
+            requireContext(),
+            R.drawable.shape_rounded_10dp_little_blue_corner
+        )
+        val redRounded =
+            ContextCompat.getDrawable(requireContext(), R.drawable.shape_rounded_10dp_red_corner)
+
+        val greenFill =
+            ContextCompat.getDrawable(requireContext(), R.drawable.shape_rounded_fill_green_10dp)
+        val blueFill =
+            ContextCompat.getDrawable(requireContext(), R.drawable.shape_rounded_fill_blue_10dp)
+        val redFill =
+            ContextCompat.getDrawable(requireContext(), R.drawable.shape_rounded_fill_red_10dp)
+
+        when (a) {
+            greenCode -> {
+                btnJawabA.background = greenRounded
+                txtA.background = greenFill
+            }
+            blueCode -> {
+                btnJawabA.background = blueRounded
+                txtA.background = blueFill
+            }
+            redCode -> {
+                btnJawabA.background = redRounded
+                txtA.background = redFill
+            }
+        }
+        when (b) {
+            greenCode -> {
+                btnJawabB.background = greenRounded
+                txtB.background = greenFill
+            }
+            blueCode -> {
+                btnJawabB.background = blueRounded
+                txtB.background = blueFill
+            }
+            redCode -> {
+                btnJawabB.background = redRounded
+                txtB.background = redFill
+            }
+        }
+        when (c) {
+            greenCode -> {
+                btnJawabC.background = greenRounded
+                txtC.background = greenFill
+            }
+            blueCode -> {
+                btnJawabC.background = blueRounded
+                txtC.background = blueFill
+            }
+            redCode -> {
+                btnJawabC.background = redRounded
+                txtC.background = redFill
+            }
+        }
+        when (d) {
+            greenCode -> {
+                btnJawabD.background = greenRounded
+                txtD.background = greenFill
+            }
+            blueCode -> {
+                btnJawabD.background = blueRounded
+                txtD.background = blueFill
+            }
+            redCode -> {
+                btnJawabD.background = redRounded
+                txtD.background = redFill
+            }
+        }
+        when (e) {
+            greenCode -> {
+                btnJawabE.background = greenRounded
+                txtE.background = greenFill
+            }
+            blueCode -> {
+                btnJawabE.background = blueRounded
+                txtE.background = blueFill
+            }
+            redCode -> {
+                btnJawabE.background = redRounded
+                txtE.background = redFill
+            }
+        }
     }
 
     @SuppressLint("SetTextI18n")
     private fun showAnswerDialogue(ans: Boolean) {
         when (ans) {
             true -> {
-                containerDialogue.background.setTint(green)
+                if (Build.VERSION.SDK_INT < 24) {
+                    containerDialogue.background = ContextCompat.getDrawable(
+                        requireContext(),
+                        R.drawable.shape_rounded_fill_green_10dp
+                    )
+                } else {
+                    containerDialogue.background.setTint(green)
+
+                }
                 imgDialogue.background =
                     ContextCompat.getDrawable(requireContext(), R.drawable.ic_baseline_check_24)
                 txtDialogue.text = "Benar"
@@ -323,7 +450,15 @@ class QuizFragmentNav : Fragment() {
             }
 
             false -> {
-                containerDialogue.background.setTint(red)
+                if (Build.VERSION.SDK_INT < 24) {
+                    containerDialogue.background = ContextCompat.getDrawable(
+                        requireContext(),
+                        R.drawable.shape_rounded_fill_red_10dp
+                    )
+
+                } else {
+                    containerDialogue.background.setTint(red)
+                }
                 imgDialogue.background =
                     ContextCompat.getDrawable(requireContext(), R.drawable.ic_baseline_close_24)
                 txtDialogue.text = "Salah"
@@ -376,6 +511,11 @@ class QuizFragmentNav : Fragment() {
         private var blue = 1
         private var green = 1
         private var red = 1
+
+        val greenCode = -13119143
+        val blueCode = -12372015
+        val redCode = -1486768
+
         private var documentNumber = 1
         private var docPath = ""
         private var realAnswer = "F"

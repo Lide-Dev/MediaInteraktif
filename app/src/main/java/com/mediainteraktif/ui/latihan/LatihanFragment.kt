@@ -12,7 +12,6 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
 import com.google.firebase.firestore.DocumentReference
@@ -96,6 +95,10 @@ class LatihanFragment : Fragment() {
                         Toast.makeText(context, "Opening File", Toast.LENGTH_SHORT).show()
                         Log.d("Location", "Download Location ${localFile.path}")
                         val i = Intent(Intent.ACTION_VIEW)
+                        val iWeb = Intent(
+                            Intent.ACTION_VIEW,
+                            Uri.parse("https://bit.ly/LatihanJwb$noDocument")
+                        )
                         i.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
                         i.setDataAndType(filePath, "application/vnd.ms-excel")
 
@@ -129,6 +132,10 @@ class LatihanFragment : Fragment() {
                         Log.d("Location", "Download Location ${localFile.path}")
                         Toast.makeText(context, "Opening File", Toast.LENGTH_SHORT).show()
                         val i = Intent(Intent.ACTION_VIEW)
+                        val iWeb = Intent(
+                            Intent.ACTION_VIEW,
+                            Uri.parse("https://bit.ly/LatihanAns$noDocument")
+                        )
                         i.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
                         i.setDataAndType(filePath, "application/vnd.ms-excel")
 

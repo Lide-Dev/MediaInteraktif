@@ -89,7 +89,7 @@
         android:layout_width="200dp"
         android:layout_height="50dp"
         android:layout_marginTop="16dp"
-        android:background="@drawable/shape_rounded_10dp_corner"
+        android:background="@drawable/shape_rounded_10dp_little_blue_corner"
         android:text="@string/login"
         android:textColor="@color/littleBlue"
         android:textSize="18sp"
